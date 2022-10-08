@@ -5,7 +5,12 @@ module.exports = {
     "./public/index.html"
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        over: "'Overpass', sans-serif",
+        dyna: "'DynaPuff', cursive"
+      }
+    },
   },
   plugins: [],
 }
