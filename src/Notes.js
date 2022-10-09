@@ -1,14 +1,18 @@
-//import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const Notes = (props) => {
 
     const eachNote = props.note?.map((item, index) => {
         return (
             <div 
+                key={item.id}
                 onMouseOver={() => props.handleNoteHover(index)}
                 onMouseOut={() => props.handleNoteOut(index)}
                 className="p-[24px] bg-rose-400 cursor-pointer even:bg-[#ffab91] first:bg-[#e7ed9b] last:bg-[#cf94da] first:row-span-2 rounded-lg relative"
             >
+                <Link to={`/note/${item.id}`}>
+                    <div className="overlay w-full h-full absolute top-0 left-0"></div>
+                </Link>
                 <div className={`w-[18px] h-[18px] rounded-full absolute top-2 ${item.hover ? "right-[47%]" : "right-2"} bg-[#252525] transition-all duration-500`}></div>
                 <h2 className="text-[1.5rem] font-[700] mb-[10px]">{item.title}</h2>
                 <h3>{item.date}</h3>
