@@ -5,18 +5,18 @@ const Notes = (props) => {
   return (
     <>
       <Header />
-      <div className="w-full px-[100px] pt-[100px]">
+      <div className="w-full px-4 sm:px-[100px] pt-[100px]">
         <h1 className="text-[2.5rem] mb-[50px] font-[700] tracking-wider">
           Notes
         </h1>
-        <div className="w-full grid grid-cols-4 gap-[20px] text-[#252525]">
+        <div className="w-full grid grid-cols-2 sm:grid-cols-4 gap-[20px] text-[#252525]">
           {props.note?.map((item, index) => {
             return (
               <div
                 key={item.id}
                 onMouseOver={() => props.handleNoteHover(index)}
                 onMouseOut={() => props.handleNoteOut(index)}
-                className="p-[24px] bg-rose-400 cursor-pointer even:bg-[#ffab91] first:bg-[#e7ed9b] last:bg-[#cf94da] first:row-span-2 rounded-lg relative"
+                className="p-4 sm:p-[24px] bg-rose-400 cursor-pointer even:bg-[#ffab91] first:bg-[#e7ed9b] last:bg-[#cf94da] first:row-span-2 rounded-lg relative"
               >
                 <Link to={`/note/${item.id}`}>
                   <div className="overlay w-full h-full absolute top-0 left-0"></div>

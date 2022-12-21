@@ -3,15 +3,29 @@
 @tailwind utilities;
 
 @layer utilities {
-    .swing {
-        animation: swing 15s ease infinite;
+  .slide {
+    animation: slide 0.8s ease-out;
+  }
+  @keyframes slide {
+    0% {
+      opacity: 0;
+      transform: translateX(200px);
     }
-    @keyframes swing {
-        0%, 100% {
-            transform: rotate(-5deg)
-        }
-        50% {
-            transform: rotate(5deg)
-        }
+    100% {
+      opacity: 1;
+      transform: translateX(0px);
     }
+  }
+  .swing {
+    animation: swing 15s ease infinite;
+  }
+  @keyframes swing {
+    0%,
+    100% {
+      transform: rotate(-5deg);
+    }
+    50% {
+      transform: rotate(5deg);
+    }
+  }
 }

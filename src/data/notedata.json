@@ -33,5 +33,12 @@
     "date": "may 15, 2022",
     "body": "Blah blah.. make your own note :)",
     "hover": false
+  },
+  {
+    "id": 6,
+    "title": "10 great React coding practices",
+    "date": "may 15, 2022",
+    "body": "Blah blah.. make your own note :)",
+    "hover": false
   }
 ]
