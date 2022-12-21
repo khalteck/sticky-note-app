@@ -42,19 +42,23 @@ const Header = () => {
               Notes
             </Link>
             <Link
-              to="/"
+              to="/create"
               className="cursor-pointer px-[10px] py-[5px] rounded-md hover:bg-rose-400 hover:translate-y-[6px] transition-all duration-300"
             >
               Create
             </Link>
           </div>
           <div className="flex">
-            <button className="bg-[#ffab91] font-[700] text-[0.90rem] mr-[20px] px-[20px] py-[5px] rounded-md hover:bg-rose-500 hover:translate-y-[6px] transition-all duration-300">
-              Sign In
-            </button>
-            <button className="bg-rose-400 font-[700] text-[0.90rem] px-[20px] py-[5px] rounded-md hover:bg-rose-500 hover:translate-y-[6px] transition-all duration-300">
-              Sign Up
-            </button>
+            <Link to="/login">
+              <button className="bg-[#ffab91] font-[700] text-[0.90rem] mr-[20px] px-[20px] py-[5px] rounded-md hover:bg-rose-500 hover:translate-y-[6px] transition-all duration-300">
+                Sign In
+              </button>
+            </Link>
+            <Link to="/register">
+              <button className="bg-rose-400 font-[700] text-[0.90rem] px-[20px] py-[5px] rounded-md hover:bg-rose-500 hover:translate-y-[6px] transition-all duration-300">
+                Sign Up
+              </button>
+            </Link>
           </div>
         </nav>
       </div>
@@ -98,17 +102,17 @@ const Header = () => {
                 </Link>
               </li>
               <li className="my-4">
-                <Link to="/" onClick={hideDropdown}>
+                <Link to="/create" onClick={hideDropdown}>
                   <div className="w-full">Add New</div>
                 </Link>
               </li>
               <li className="my-4">
-                <Link to="/" onClick={hideDropdown}>
+                <Link to="/register" onClick={hideDropdown}>
                   <div className="w-full">Sign Up</div>
                 </Link>
               </li>
               <li className="my-4">
-                <Link to="/" onClick={hideDropdown}>
+                <Link to="/login" onClick={hideDropdown}>
                   <div className="w-full">Log In</div>
                 </Link>
               </li>

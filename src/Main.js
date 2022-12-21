@@ -1,6 +1,7 @@
 import hero from "./images/searching-error.svg";
 import crown from "./images/handy-line-line.png";
 import Header from "./Header";
+import { Link } from "react-router-dom";
 
 const Main = () => {
   return (
@@ -31,9 +32,11 @@ const Main = () => {
                 <br />- Built by <span className="text-rose-400">khalid</span>.
                 <br /> Really, what will you all do without me. you're welcome.
               </p>
-              <button className="bg-rose-500 text-[0.90rem] mt-8 sm:mt-[50px] px-[20px] py-[10px] rounded-sm hover:bg-rose-400 hover:translate-y-[6px] transition-all duration-300">
-                Sign Up to get started
-              </button>
+              <Link to="/register">
+                <button className="bg-rose-500 text-[0.90rem] mt-8 sm:mt-[50px] px-[20px] py-[10px] rounded-sm hover:bg-rose-400 hover:translate-y-[6px] transition-all duration-300">
+                  Sign Up to get started
+                </button>
+              </Link>
             </div>
             <div className="w-12 h-12 sm:w-[70px] sm:h-[70px] leading-none pt-1 text-[40px] flex justify-center items-center rounded-full cursor-pointer bg-rose-500 hover:bg-rose-400 hover:translate-y-[6px] transition-all duration-300 fixed right-8 bottom-8">
               +
