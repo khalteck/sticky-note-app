@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import ScrollToTop from "../ScrollToTop";
 import Header from "../Header";
 
 const Notes = (props) => {
@@ -39,6 +40,7 @@ const Notes = (props) => {
         <div className="w-12 h-12 sm:w-[70px] sm:h-[70px] leading-none pt-1 text-[40px] flex justify-center items-center rounded-full cursor-pointer bg-rose-500 hover:bg-rose-400 hover:translate-y-[6px] transition-all duration-300 fixed right-8 bottom-8">
           +
         </div>
+        <ScrollToTop />
       </div>
     </>
   );

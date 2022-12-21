@@ -1,6 +1,7 @@
 import Header from "../Header";
 import { Link } from "react-router-dom";
 import eye from "../images/icons8-eye-30.png";
+import ScrollToTop from "../ScrollToTop";
 
 const Login = ({ togglePassword, showPassword }) => {
   return (
@@ -42,6 +43,7 @@ const Login = ({ togglePassword, showPassword }) => {
           </form>
         </div>
       </div>
+      <ScrollToTop />
     </>
   );
 };

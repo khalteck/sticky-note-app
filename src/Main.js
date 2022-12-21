@@ -2,6 +2,7 @@ import hero from "./images/searching-error.svg";
 import crown from "./images/handy-line-line.png";
 import Header from "./Header";
 import { Link } from "react-router-dom";
+import ScrollToTop from "./ScrollToTop";
 
 const Main = () => {
   return (
@@ -43,6 +44,7 @@ const Main = () => {
             </div>
           </div>
         </section>
+        <ScrollToTop />
       </main>
     </>
   );

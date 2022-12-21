@@ -1,4 +1,5 @@
 import { useParams } from "react-router-dom";
+import ScrollToTop from "../ScrollToTop";
 import Header from "../Header";
 
 const Detail = ({ note }) => {
@@ -21,6 +22,7 @@ const Detail = ({ note }) => {
           <p className="text-[1.25rem]">{eachNote?.body}</p>
         </div>
       </div>
+      <ScrollToTop />
     </>
   );
 };
