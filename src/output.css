@@ -618,6 +618,14 @@ video {
   right: 0.5rem;
 }
 
+.right-1 {
+  right: 0.25rem;
+}
+
+.right-0 {
+  right: 0px;
+}
+
 .z-\[100\] {
   z-index: 100;
 }
@@ -651,6 +659,11 @@ video {
 .my-16 {
   margin-top: 4rem;
   margin-bottom: 4rem;
+}
+
+.my-8 {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
 }
 
 .mr-auto {
@@ -699,6 +712,26 @@ video {
 
 .mb-4 {
   margin-bottom: 1rem;
+}
+
+.mt-16 {
+  margin-top: 4rem;
+}
+
+.mt-4 {
+  margin-top: 1rem;
+}
+
+.mb-16 {
+  margin-bottom: 4rem;
+}
+
+.mt-2 {
+  margin-top: 0.5rem;
+}
+
+.mb-6 {
+  margin-bottom: 1.5rem;
 }
 
 .block {
@@ -1081,6 +1114,16 @@ video {
   padding-bottom: 2.5rem;
 }
 
+.py-2 {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.py-3 {
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+}
+
 .pt-\[100px\] {
   padding-top: 100px;
 }
@@ -1147,6 +1190,14 @@ video {
 
 .text-\[2rem\] {
   font-size: 2rem;
+}
+
+.text-\[0\.75rem\] {
+  font-size: 0.75rem;
+}
+
+.text-\[0\.85rem\] {
+  font-size: 0.85rem;
 }
 
 .font-\[700\] {
@@ -1350,6 +1401,10 @@ video {
     margin-bottom: 50px;
   }
 
+  .sm\:mb-16 {
+    margin-bottom: 4rem;
+  }
+
   .sm\:block {
     display: block;
   }
@@ -1406,6 +1461,14 @@ video {
     padding: 24px;
   }
 
+  .sm\:p-6 {
+    padding: 1.5rem;
+  }
+
+  .sm\:p-5 {
+    padding: 1.25rem;
+  }
+
   .sm\:px-\[100px\] {
     padding-left: 100px;
     padding-right: 100px;
@@ -1425,6 +1488,14 @@ video {
 
   .sm\:text-\[1\.5rem\] {
     font-size: 1.5rem;
+  }
+
+  .sm\:text-\[1rem\] {
+    font-size: 1rem;
+  }
+
+  .sm\:text-\[1\.25rem\] {
+    font-size: 1.25rem;
   }
 }
 

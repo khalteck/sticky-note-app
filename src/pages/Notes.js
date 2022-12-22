@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import ScrollToTop from "../ScrollToTop";
 import Header from "../Header";
 import empty from "../images/icons8-empty-box-64.png";
+import close from "../images/icons8-cancel-48.png";
 
 const Notes = ({
   note,
@@ -12,6 +13,8 @@ const Notes = ({
   handleClick,
   logout,
   currentUserFromDb,
+  handleHideWelcome,
+  welcomeMessage,
 }) => {
   // console.log(userNote);
   return (
@@ -22,8 +25,21 @@ const Notes = ({
         currentUserFromDb={currentUserFromDb}
       />
       <div className="w-full px-4 sm:px-[100px] py-[100px]">
+        {welcomeMessage && (
+          <div className="w-full px-5 py-3 sm:p-5 mt-4 mb-6 sm:mb-16 border-2 border-[#ffab91] rounded-lg relative">
+            <p className="text-[1rem] sm:text-[1.25rem]">
+              Hi {currentUserFromDb?.displayName}, welcome to your library.
+            </p>
+            <img
+              className="w-[35px] h-[35px] cursor-pointer mr-[25px] absolute top-1/2 right-0 translate-y-[-50%]"
+              alt=""
+              src={close}
+              onClick={handleHideWelcome}
+            />
+          </div>
+        )}
         <h1 className="text-[2.5rem] mb-8 sm:mb-[50px] font-[700] tracking-wider">
-          Notes
+          {currentUserFromDb?.displayName}'s notes
         </h1>
         {user && (
           <div className="w-full grid grid-cols-2 sm:grid-cols-4 gap-[20px] text-[#252525]">
@@ -53,7 +69,7 @@ const Notes = ({
                 );
               })
             ) : (
-              <div className="w-full col-span-2 text-center py-10 border border-rose-400 rounded-xl text-gray-500">
+              <div className="w-full col-span-2 text-center py-10 border-2 border-rose-400 rounded-xl text-gray-500">
                 <img
                   alt="empty"
                   src={empty}

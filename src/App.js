@@ -72,7 +72,7 @@ function App() {
     const getUserDetails = async () => {
       const userQuery = query(
         collection(db, "users"),
-        where("email", "==", user.email)
+        where("email", "==", user?.email)
       );
       const querySnapshot = await getDocs(userQuery);
       querySnapshot.forEach((doc) => {
@@ -105,6 +105,7 @@ function App() {
     } catch (error) {
       setShowLoader(false);
       console.log(error.message);
+      alert("Oh good lord! USER ALREADY EXISTS!!");
     }
   };
 
@@ -126,6 +127,7 @@ function App() {
     } catch (error) {
       setShowLoader(false);
       console.log(error.message);
+      alert("Oh commoooon! INVALID USER CREDENTIALS!!");
     }
   };
 
@@ -176,6 +178,11 @@ function App() {
     setShowPassword((prev) => !prev);
   }
 
+  //to show and hide welcome message
+  const [welcomeMessage, setWelcomeMessage] = useState(true);
+  function handleHideWelcome() {
+    setWelcomeMessage((prev) => !prev);
+  }
   return (
     <Routes>
       <Route
@@ -200,11 +207,32 @@ function App() {
             handleClick={handleClick}
             logout={logout}
             currentUserFromDb={currentUserFromDb}
+            welcomeMessage={welcomeMessage}
+            handleHideWelcome={handleHideWelcome}
           />
         }
       />
-      <Route path="/note/:id" element={<Detail note={note} />} />
-      <Route path="/create" element={<Create />} />
+      <Route
+        path="/note/:id"
+        element={
+          <Detail
+            note={note}
+            user={user}
+            currentUserFromDb={currentUserFromDb}
+            logout={logout}
+          />
+        }
+      />
+      <Route
+        path="/create"
+        element={
+          <Create
+            user={user}
+            currentUserFromDb={currentUserFromDb}
+            logout={logout}
+          />
+        }
+      />
       <Route
         path="/register"
         element={
