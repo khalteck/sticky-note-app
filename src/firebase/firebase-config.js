@@ -16,15 +16,11 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
-// export const firestore = firebase.firestore();
 
 // Initialize Cloud Firestore and get a reference to the service
 export const db = getFirestore(app);
 
 export const createUserDocument = async (email, name) => {
-  // const { email } = user;
-  // const { displayName } = additionalData;
-
   try {
     const docRef = await addDoc(collection(db, "users"), {
       email: email,

@@ -16,7 +16,7 @@ import {
   signOut,
 } from "firebase/auth";
 import { auth, createUserDocument, db } from "./firebase/firebase-config";
-import { collection, getDocs } from "firebase/firestore";
+import { getDocs, collection, query, where } from "firebase/firestore";
 
 function App() {
   //to save reg form input
@@ -56,23 +56,33 @@ function App() {
     });
   }
 
+  //to save current user from auth in state
   const [user, setUser] = useState({});
   useEffect(() => {
     onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser.email);
+      setUser(currentUser);
     });
   }, []);
 
-  //to get users saved in db
-  const getUserDetails = async () => {
-    const querySnapshot = await getDocs(collection(db, "users"));
-    querySnapshot.forEach((doc) => {
-      console.log(doc.data());
-      // console.log(`${doc.id} => ${doc.data()}`);
-    });
-  };
+  //to save current user from db
+  const [currentUserFromDb, setCurrentUserFromDb] = useState({});
 
-  console.log(getUserDetails());
+  //to get users saved in db
+  useEffect(() => {
+    const getUserDetails = async () => {
+      const userQuery = query(
+        collection(db, "users"),
+        where("email", "==", user.email)
+      );
+      const querySnapshot = await getDocs(userQuery);
+      querySnapshot.forEach((doc) => {
+        setCurrentUserFromDb(doc.data());
+      });
+    };
+    getUserDetails();
+  }, [user]);
+
+  // console.log(currentUserFromDb);
 
   const [showLoader, setShowLoader] = useState(false);
   const navigate = useNavigate();
@@ -168,7 +178,16 @@ function App() {
 
   return (
     <Routes>
-      <Route path="/" element={<Main user={user} logout={logout} />} />
+      <Route
+        path="/"
+        element={
+          <Main
+            user={user}
+            logout={logout}
+            currentUserFromDb={currentUserFromDb}
+          />
+        }
+      />
       <Route
         path="/notes"
         element={
@@ -180,6 +199,7 @@ function App() {
             handleNoteOut={handleNoteOut}
             handleClick={handleClick}
             logout={logout}
+            currentUserFromDb={currentUserFromDb}
           />
         }
       />

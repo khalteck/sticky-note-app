@@ -11,11 +11,16 @@ const Notes = ({
   handleNoteOut,
   handleClick,
   logout,
+  currentUserFromDb,
 }) => {
   // console.log(userNote);
   return (
     <>
-      <Header user={user} logout={logout} />
+      <Header
+        user={user}
+        logout={logout}
+        currentUserFromDb={currentUserFromDb}
+      />
       <div className="w-full px-4 sm:px-[100px] py-[100px]">
         <h1 className="text-[2.5rem] mb-8 sm:mb-[50px] font-[700] tracking-wider">
           Notes

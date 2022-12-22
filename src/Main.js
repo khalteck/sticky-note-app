@@ -4,10 +4,14 @@ import Header from "./Header";
 import { Link } from "react-router-dom";
 import ScrollToTop from "./ScrollToTop";
 
-const Main = ({ user, logout }) => {
+const Main = ({ user, logout, currentUserFromDb }) => {
   return (
     <>
-      <Header user={user} logout={logout} />
+      <Header
+        user={user}
+        logout={logout}
+        currentUserFromDb={currentUserFromDb}
+      />
       <main className="bg-home bg-repeat min-h-screen">
         <section className="w-full min-h-screen bg-[#252525]/95 relative px-3 sm:px-[100px] sm:pt-[130px] pt-20 pb-8">
           <div className="block sm:flex items-center">

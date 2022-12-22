@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import userImg from "./images/icons8-user-48.png";
 
-const Header = ({ user, logout }) => {
+const Header = ({ user, logout, currentUserFromDb }) => {
   const [openMenu, setOpenMenu] = useState(false);
   function handleClick() {
     setOpenMenu((prevState) => !prevState);
@@ -71,7 +71,7 @@ const Header = ({ user, logout }) => {
           {user && (
             <div className="flex gap-3 items-center">
               <div className="px-5 py-[4px] border-2 border-rose-400 rounded-lg flex items-center gap-2">
-                <h2 className="">Hi {user.displayName}</h2>
+                <h2 className="">Hi {currentUserFromDb.displayName}</h2>
                 <img alt="user" src={userImg} className="w-6 h-6" />
               </div>
               <button
@@ -119,7 +119,7 @@ const Header = ({ user, logout }) => {
                   className="my-4 flex items-center justify-center gap-2 border border-rose-400 px-2 py-1 rounded-lg"
                 >
                   <div className="text-rose-400 font-bold">
-                    Hi {user.displayName}
+                    Hi {currentUserFromDb.displayName}
                   </div>
                   <img alt="user" src={userImg} className="w-8 h-8" />
                 </li>
