@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import eye from "../images/icons8-eye-30.png";
 import ScrollToTop from "../ScrollToTop";
 
-const Login = ({ togglePassword, showPassword }) => {
+const Login = ({ togglePassword, showPassword, login, handleLoginChange }) => {
   return (
     <>
       <Header />
@@ -14,6 +14,7 @@ const Login = ({ togglePassword, showPassword }) => {
             <input
               type="email"
               id="email"
+              onChange={handleLoginChange}
               placeholder="email"
               className="w-full bg-rose-400/20 my-4 p-3 outline-none rounded-lg"
             />
@@ -21,6 +22,7 @@ const Login = ({ togglePassword, showPassword }) => {
               <input
                 type={showPassword ? "text" : "password"}
                 id="password"
+                onChange={handleLoginChange}
                 placeholder="password"
                 className="w-full bg-rose-400/20 my-4 p-3 outline-none rounded-lg"
               />
@@ -31,7 +33,10 @@ const Login = ({ togglePassword, showPassword }) => {
                 onClick={togglePassword}
               />
             </div>
-            <button className="w-full bg-rose-400 my-4 p-3 outline-none rounded-lg">
+            <button
+              onClick={login}
+              className="w-full bg-rose-400 my-4 p-3 outline-none rounded-lg"
+            >
               Login
             </button>
             <p>

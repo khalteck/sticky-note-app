@@ -2,10 +2,18 @@ import Header from "../Header";
 import { Link } from "react-router-dom";
 import eye from "../images/icons8-eye-30.png";
 import ScrollToTop from "../ScrollToTop";
+import Loader from "../components/Loader";
 
-const Register = ({ togglePassword, showPassword }) => {
+const Register = ({
+  togglePassword,
+  showPassword,
+  handleRegChange,
+  register,
+  showLoader,
+}) => {
   return (
     <>
+      {showLoader && <Loader />}
       <Header />
       <div className="w-full min-h-[85vh] px-4 my-16 text-white flex items-center justify-center">
         <div className="w-full sm:w-[550px] p-5 sm:p-10 rounded-2xl border-2 border-rose-400">
@@ -13,13 +21,15 @@ const Register = ({ togglePassword, showPassword }) => {
           <form>
             <input
               type="text"
-              id="name"
+              id="displayName"
+              onChange={handleRegChange}
               placeholder="Display Name"
               className="w-full bg-rose-400/20 my-4 p-3 outline-none rounded-lg"
             />
             <input
               type="email"
               id="email"
+              onChange={handleRegChange}
               placeholder="email"
               className="w-full bg-rose-400/20 my-4 p-3 outline-none rounded-lg"
             />
@@ -27,6 +37,7 @@ const Register = ({ togglePassword, showPassword }) => {
               <input
                 type={showPassword ? "text" : "password"}
                 id="password"
+                onChange={handleRegChange}
                 placeholder="password"
                 className="w-full bg-rose-400/20 my-4 p-3 outline-none rounded-lg"
               />
@@ -37,7 +48,10 @@ const Register = ({ togglePassword, showPassword }) => {
                 onClick={togglePassword}
               />
             </div>
-            <button className="w-full bg-rose-400 my-4 p-3 outline-none rounded-lg">
+            <button
+              onClick={register}
+              className="w-full bg-rose-400 my-4 p-3 outline-none rounded-lg"
+            >
               Register
             </button>
             <p>
