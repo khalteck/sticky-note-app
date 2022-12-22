@@ -19,14 +19,6 @@ import { auth, createUserDocument, db } from "./firebase/firebase-config";
 import { collection, getDocs } from "firebase/firestore";
 
 function App() {
-  const getUserDetails = async () => {
-    const querySnapshot = await getDocs(collection(db, "users"));
-    querySnapshot.forEach((doc) => {
-      console.log(`${doc.id} => ${doc.data()}`);
-    });
-  };
-
-  console.log(getUserDetails());
   //to save reg form input
   const [regForm, setRegForm] = useState({
     displayName: "",
@@ -67,9 +59,20 @@ function App() {
   const [user, setUser] = useState({});
   useEffect(() => {
     onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
+      setUser(currentUser.email);
     });
   }, []);
+
+  //to get users saved in db
+  const getUserDetails = async () => {
+    const querySnapshot = await getDocs(collection(db, "users"));
+    querySnapshot.forEach((doc) => {
+      console.log(doc.data());
+      // console.log(`${doc.id} => ${doc.data()}`);
+    });
+  };
+
+  console.log(getUserDetails());
 
   const [showLoader, setShowLoader] = useState(false);
   const navigate = useNavigate();
