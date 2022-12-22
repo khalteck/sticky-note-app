@@ -1,5 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
+import { getFirestore, collection, addDoc } from "firebase/firestore";
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -15,3 +16,43 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
+// export const firestore = firebase.firestore();
+
+// Initialize Cloud Firestore and get a reference to the service
+export const db = getFirestore(app);
+
+export const createUserDocument = async (email, name) => {
+  // const { email } = user;
+  // const { displayName } = additionalData;
+
+  try {
+    const docRef = await addDoc(collection(db, "users"), {
+      email: email,
+      displayName: name,
+      createdAt: new Date(),
+    });
+    console.log("Document written with ID: ", docRef.id);
+  } catch (err) {
+    console.error("Error adding document: ", err);
+  }
+
+  // if (!user) return;
+
+  // const userRef = firestore.doc(`users/${user.uid}`);
+  // const snapshot = await userRef.get();
+
+  // if (!snapshot.exists) {
+  //   const { email } = user;
+  //   const { displayName } = additionalData;
+
+  //   try {
+  //     userRef.set({
+  //       email,
+  //       displayName,
+  //       createdAt: new Date(),
+  //     });
+  //   } catch (err) {
+  //     console.log(err.message);
+  //   }
+  // }
+};

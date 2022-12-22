@@ -3,8 +3,9 @@ import menu from "./images/icons8-xbox-menu-50.png";
 import close from "./images/icons8-cancel-48.png";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import userImg from "./images/icons8-user-48.png";
 
-const Header = () => {
+const Header = ({ user, logout }) => {
   const [openMenu, setOpenMenu] = useState(false);
   function handleClick() {
     setOpenMenu((prevState) => !prevState);
@@ -14,6 +15,11 @@ const Header = () => {
   const hideDropdown = () => {
     setOpenMenu(false);
   };
+
+  // const [log, setLog] = useState(false);
+  // function handleLog() {
+  //   setLog((prev) => !prev);
+  // }
 
   return (
     <header>
@@ -48,18 +54,34 @@ const Header = () => {
               Create
             </Link>
           </div>
-          <div className="flex">
-            <Link to="/login">
-              <button className="bg-[#ffab91] font-[700] text-[0.90rem] mr-[20px] px-[20px] py-[5px] rounded-md hover:bg-rose-500 hover:translate-y-[6px] transition-all duration-300">
-                Sign In
+          {!user && (
+            <div className="flex">
+              <Link to="/login">
+                <button className="bg-[#ffab91] font-[700] text-[0.90rem] mr-[20px] px-[20px] py-[5px] rounded-md hover:bg-rose-500 hover:translate-y-[6px] transition-all duration-300">
+                  Sign In
+                </button>
+              </Link>
+              <Link to="/register">
+                <button className="bg-rose-400 font-[700] text-[0.90rem] px-[20px] py-[5px] rounded-md hover:bg-rose-500 hover:translate-y-[6px] transition-all duration-300">
+                  Sign Up
+                </button>
+              </Link>
+            </div>
+          )}
+          {user && (
+            <div className="flex gap-3 items-center">
+              <div className="px-5 py-[4px] border-2 border-rose-400 rounded-lg flex items-center gap-2">
+                <h2 className="">Hi {user.displayName}</h2>
+                <img alt="user" src={userImg} className="w-6 h-6" />
+              </div>
+              <button
+                onClick={logout}
+                className="bg-rose-400 font-[700] text-[0.90rem] px-[20px] py-[5px] rounded-md hover:bg-rose-500 hover:translate-y-[6px] transition-all duration-300"
+              >
+                logout
               </button>
-            </Link>
-            <Link to="/register">
-              <button className="bg-rose-400 font-[700] text-[0.90rem] px-[20px] py-[5px] rounded-md hover:bg-rose-500 hover:translate-y-[6px] transition-all duration-300">
-                Sign Up
-              </button>
-            </Link>
-          </div>
+            </div>
+          )}
         </nav>
       </div>
 
@@ -90,7 +112,18 @@ const Header = () => {
               src={close}
               onClick={handleClick}
             />
-            <ul className="slide float-right w-[65%] h-full bg-[#252525] px-[30px] text-[1.25rem] text-white pt-[100px]">
+            <ul className="slide float-right w-[65%] h-full bg-[#252525] px-[30px] text-[1rem] text-white pt-[100px]">
+              {user && (
+                <li
+                  onClick={logout}
+                  className="my-4 flex items-center justify-center gap-2 border border-rose-400 px-2 py-1 rounded-lg"
+                >
+                  <div className="text-rose-400 font-bold">
+                    Hi {user.displayName}
+                  </div>
+                  <img alt="user" src={userImg} className="w-8 h-8" />
+                </li>
+              )}
               <li className="my-4">
                 <Link to="/" onClick={hideDropdown}>
                   <div className="w-full">Home</div>
@@ -106,16 +139,25 @@ const Header = () => {
                   <div className="w-full">Add New</div>
                 </Link>
               </li>
-              <li className="my-4">
-                <Link to="/register" onClick={hideDropdown}>
-                  <div className="w-full">Sign Up</div>
-                </Link>
-              </li>
-              <li className="my-4">
-                <Link to="/login" onClick={hideDropdown}>
-                  <div className="w-full">Log In</div>
-                </Link>
-              </li>
+              {!user && (
+                <li className="my-4">
+                  <Link to="/register" onClick={hideDropdown}>
+                    <div className="w-full">Sign Up</div>
+                  </Link>
+                </li>
+              )}
+              {!user && (
+                <li className="my-4">
+                  <Link to="/login" onClick={hideDropdown}>
+                    <div className="w-full">Log In</div>
+                  </Link>
+                </li>
+              )}
+              {user && (
+                <li onClick={logout} className="my-4">
+                  <div className="w-full">Log Out</div>
+                </li>
+              )}
             </ul>
           </div>
         )}

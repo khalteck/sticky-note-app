@@ -4,10 +4,10 @@ import Header from "./Header";
 import { Link } from "react-router-dom";
 import ScrollToTop from "./ScrollToTop";
 
-const Main = () => {
+const Main = ({ user, logout }) => {
   return (
     <>
-      <Header />
+      <Header user={user} logout={logout} />
       <main className="bg-home bg-repeat min-h-screen">
         <section className="w-full min-h-screen bg-[#252525]/95 relative px-3 sm:px-[100px] sm:pt-[130px] pt-20 pb-8">
           <div className="block sm:flex items-center">
@@ -33,15 +33,26 @@ const Main = () => {
                 <br />- Built by <span className="text-rose-400">khalid</span>.
                 <br /> Really, what will you all do without me. you're welcome.
               </p>
-              <Link to="/register">
-                <button className="bg-rose-500 text-[0.90rem] mt-8 sm:mt-[50px] px-[20px] py-[10px] rounded-sm hover:bg-rose-400 hover:translate-y-[6px] transition-all duration-300">
-                  Sign Up to get started
-                </button>
-              </Link>
+              {!user && (
+                <Link to="/register">
+                  <button className="bg-rose-500 text-[0.90rem] mt-8 sm:mt-[50px] px-[20px] py-[10px] rounded-sm hover:bg-rose-400 hover:translate-y-[6px] transition-all duration-300">
+                    Sign Up to get started
+                  </button>
+                </Link>
+              )}
+              {user && (
+                <Link to="/create">
+                  <button className="bg-rose-500 text-[0.90rem] mt-8 sm:mt-[50px] px-[20px] py-[10px] rounded-sm hover:bg-rose-400 hover:translate-y-[6px] transition-all duration-300">
+                    Create new note
+                  </button>
+                </Link>
+              )}
             </div>
-            <div className="w-12 h-12 sm:w-[70px] sm:h-[70px] leading-none pt-1 text-[40px] flex justify-center items-center rounded-full cursor-pointer bg-rose-500 hover:bg-rose-400 hover:translate-y-[6px] transition-all duration-300 fixed right-8 bottom-8">
-              +
-            </div>
+            <Link to="/create">
+              <div className="w-12 h-12 sm:w-[70px] sm:h-[70px] leading-none pt-1 text-[40px] flex justify-center items-center rounded-full cursor-pointer bg-rose-500 hover:bg-rose-400 hover:translate-y-[6px] transition-all duration-300 fixed right-8 bottom-8">
+                +
+              </div>
+            </Link>
           </div>
         </section>
         <ScrollToTop />

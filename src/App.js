@@ -4,7 +4,8 @@ import Notes from "./pages/Notes";
 import { useState, useEffect } from "react";
 import Detail from "./pages/Detail";
 import "./output.css";
-import notedata from "./data/notedata.json";
+import notedata from "./data/notedatamock.json";
+import userNoteData from "./data/userNoteData.json";
 import Create from "./pages/Create";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
@@ -12,11 +13,20 @@ import {
   createUserWithEmailAndPassword,
   onAuthStateChanged,
   signInWithEmailAndPassword,
-  // signOut,
+  signOut,
 } from "firebase/auth";
-import { auth } from "./firebase/firebase-config";
+import { auth, createUserDocument, db } from "./firebase/firebase-config";
+import { collection, getDocs } from "firebase/firestore";
 
 function App() {
+  const getUserDetails = async () => {
+    const querySnapshot = await getDocs(collection(db, "users"));
+    querySnapshot.forEach((doc) => {
+      console.log(`${doc.id} => ${doc.data()}`);
+    });
+  };
+
+  console.log(getUserDetails());
   //to save reg form input
   const [regForm, setRegForm] = useState({
     displayName: "",
@@ -69,15 +79,20 @@ function App() {
     e.preventDefault();
     setShowLoader(true);
 
-    createUserWithEmailAndPassword(auth, regForm.email, regForm.password)
-      .then((res) => {
-        setShowLoader(false);
-        navigate("/notes");
-      })
-      .catch((err) => {
-        setShowLoader(false);
-        console.log(err.message);
-      });
+    try {
+      const user = await createUserWithEmailAndPassword(
+        auth,
+        regForm.email,
+        regForm.password
+      );
+      console.log(user);
+      setShowLoader(false);
+      navigate("/notes");
+      await createUserDocument(regForm.email, regForm.displayName);
+    } catch (error) {
+      setShowLoader(false);
+      console.log(error.message);
+    }
   };
 
   //to log in users
@@ -85,25 +100,41 @@ function App() {
     e.preventDefault();
     setShowLoader(true);
 
-    signInWithEmailAndPassword(auth, loginForm.email, loginForm.password)
-      .then((res) => {
-        setShowLoader(false);
-        navigate("/dashboard");
-      })
-      .catch((err) => {
-        setShowLoader(false);
-        console.log(err.message);
-      });
+    try {
+      const user = await signInWithEmailAndPassword(
+        auth,
+        loginForm.email,
+        loginForm.password
+      );
+
+      console.log(user);
+      setShowLoader(false);
+      navigate("/notes");
+    } catch (error) {
+      setShowLoader(false);
+      console.log(error.message);
+    }
+  };
+
+  //to log out users
+  const logout = async () => {
+    signOut(auth).then(() => {
+      navigate("/");
+    });
   };
 
   //to set the default notes in state
   const [note, setNote] = useState(notedata);
+  const [userNote, setUserNote] = useState(userNoteData);
 
   //to set hover state of each sticky note
   function handleNoteHover(index) {
     const newNote = [...note];
     newNote[index].hover = true;
     setNote(newNote);
+    const newUserNote = [...userNote];
+    newUserNote[index].hover = true;
+    setUserNote(newUserNote);
   }
 
   //to set hover out state of each sticky note
@@ -111,6 +142,9 @@ function App() {
     const newNote = [...note];
     newNote[index].hover = false;
     setNote(newNote);
+    const newUserNote = [...userNote];
+    newUserNote[index].hover = false;
+    setNote(newUserNote);
   }
 
   //to handle the click state of each sticky note
@@ -118,6 +152,9 @@ function App() {
     const newNote = [...note];
     newNote[index].hover = false;
     setNote(newNote);
+    const newUserNote = [...userNote];
+    newUserNote[index].hover = false;
+    setNote(newUserNote);
   }
 
   //to show and hide password
@@ -128,15 +165,18 @@ function App() {
 
   return (
     <Routes>
-      <Route path="/" element={<Main />} />
+      <Route path="/" element={<Main user={user} logout={logout} />} />
       <Route
         path="/notes"
         element={
           <Notes
+            user={user}
             note={note}
+            userNote={userNote}
             handleNoteHover={handleNoteHover}
             handleNoteOut={handleNoteOut}
             handleClick={handleClick}
+            logout={logout}
           />
         }
       />
@@ -163,7 +203,9 @@ function App() {
             showPassword={showPassword}
             togglePassword={togglePassword}
             handleLoginChange={handleLoginChange}
+            showLoader={showLoader}
             login={login}
+            user={user}
           />
         }
       />

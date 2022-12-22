@@ -2,10 +2,18 @@ import Header from "../Header";
 import { Link } from "react-router-dom";
 import eye from "../images/icons8-eye-30.png";
 import ScrollToTop from "../ScrollToTop";
+import Loader from "../components/Loader";
 
-const Login = ({ togglePassword, showPassword, login, handleLoginChange }) => {
+const Login = ({
+  togglePassword,
+  showPassword,
+  login,
+  handleLoginChange,
+  showLoader,
+}) => {
   return (
     <>
+      {showLoader && <Loader />}
       <Header />
       <div className="w-full min-h-[85vh] px-4 my-16 text-white flex items-center justify-center">
         <div className="w-full sm:w-[550px] p-5 sm:p-10 rounded-2xl border-2 border-rose-400">
