@@ -66,18 +66,26 @@ function App() {
 
   //to save current user from db
   const [currentUserFromDb, setCurrentUserFromDb] = useState({});
+  const [waitForUserFromDb, setWaitForUserFromDb] = useState(false);
 
   //to get users saved in db
   useEffect(() => {
     const getUserDetails = async () => {
+      setWaitForUserFromDb(true);
       const userQuery = query(
         collection(db, "users"),
         where("email", "==", user?.email)
       );
-      const querySnapshot = await getDocs(userQuery);
-      querySnapshot.forEach((doc) => {
-        setCurrentUserFromDb(doc.data());
-      });
+      try {
+        const querySnapshot = await getDocs(userQuery);
+        querySnapshot.forEach((doc) => {
+          setCurrentUserFromDb(doc.data());
+        });
+        setWaitForUserFromDb(false);
+      } catch (err) {
+        console.log(err.message);
+        setWaitForUserFromDb(false);
+      }
     };
     getUserDetails();
   }, [user]);
@@ -157,7 +165,7 @@ function App() {
     newNote[index].hover = false;
     setNote(newNote);
     const newUserNote = [...userNote];
-    newUserNote[index].hover = false;
+    if (newUserNote) newUserNote[index].hover = false;
     setUserNote(newUserNote);
   }
 
@@ -167,7 +175,7 @@ function App() {
     newNote[index].hover = false;
     setNote(newNote);
     const newUserNote = [...userNote];
-    newUserNote[index].hover = false;
+    if (newUserNote) newUserNote[index].hover = false;
     setUserNote(newUserNote);
   }
 
@@ -253,6 +261,7 @@ function App() {
             user={user}
             logout={logout}
             currentUserFromDb={currentUserFromDb}
+            waitForUserFromDb={waitForUserFromDb}
           />
         }
       />
@@ -270,6 +279,7 @@ function App() {
             currentUserFromDb={currentUserFromDb}
             welcomeMessage={welcomeMessage}
             handleHideWelcome={handleHideWelcome}
+            waitForUserFromDb={waitForUserFromDb}
           />
         }
       />

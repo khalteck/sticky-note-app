@@ -3,6 +3,7 @@ import ScrollToTop from "../ScrollToTop";
 import Header from "../Header";
 import empty from "../images/icons8-empty-box-64.png";
 import close from "../images/icons8-cancel-48.png";
+import Loader from "../components/Loader";
 
 const Notes = ({
   note,
@@ -15,6 +16,7 @@ const Notes = ({
   currentUserFromDb,
   handleHideWelcome,
   welcomeMessage,
+  waitForUserFromDb,
 }) => {
   // console.log(userNote);
   return (
@@ -25,6 +27,8 @@ const Notes = ({
         currentUserFromDb={currentUserFromDb}
       />
       <div className="w-full px-4 sm:px-[100px] py-[100px]">
+        {!waitForUserFromDb && !user && <Loader />}
+        {waitForUserFromDb && user && <Loader />}
         {welcomeMessage && (
           <div className="w-full px-5 py-3 sm:p-5 mt-4 mb-6 sm:mb-16 border-2 border-[#ffab91] rounded-lg relative">
             <p className="text-[1rem] sm:text-[1.25rem]">
@@ -38,11 +42,11 @@ const Notes = ({
             />
           </div>
         )}
-        <h1 className="text-[2.5rem] mb-8 sm:mb-12 font-bold tracking-wider">
-          {currentUserFromDb?.displayName}'s notes
+        <h1 className="text-[1.75rem] sm:text-[2.5rem] mb-8 sm:mb-12 font-bold tracking-wider">
+          {user && `${currentUserFromDb?.displayName}'s`} {user ? "n" : "N"}otes
         </h1>
         {user && (
-          <div className="w-full grid grid-cols-2 sm:grid-cols-4 gap-5 text-[#252525]">
+          <div className="w-full grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-5 text-[#252525]">
             {userNote.length > 0 ? (
               userNote?.map((item, index) => {
                 return (
@@ -88,7 +92,7 @@ const Notes = ({
         )}
 
         {!user && (
-          <div className="w-full grid grid-cols-2 sm:grid-cols-4 gap-5 text-[#252525]">
+          <div className="w-full grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-5 text-[#252525]">
             {note?.map((item, index) => {
               return (
                 <div
