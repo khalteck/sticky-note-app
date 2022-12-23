@@ -114,10 +114,7 @@ const Header = ({ user, logout, currentUserFromDb }) => {
             />
             <ul className="slide float-right w-[65%] h-full bg-[#252525] px-[30px] text-[1rem] text-white pt-[100px]">
               {user && (
-                <li
-                  onClick={logout}
-                  className="my-4 flex items-center justify-center gap-2 border border-rose-400 px-2 py-1 rounded-lg"
-                >
+                <li className="my-4 flex items-center justify-center gap-2 border border-rose-400 px-2 py-1 rounded-lg">
                   <div className="text-rose-400 font-bold text-[1.25rem]">
                     {currentUserFromDb.displayName}
                   </div>
