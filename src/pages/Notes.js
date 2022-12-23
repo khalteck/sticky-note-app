@@ -58,13 +58,13 @@ const Notes = ({
                     </Link>
                     <div
                       className={`w-3 h-3 sm:w-[18px] sm:h-[18px] rounded-full absolute top-2 ${
-                        item.hover ? "right-[47%]" : "right-2"
+                        item?.hover ? "right-[47%]" : "right-2"
                       } bg-[#252525] transition-all duration-500`}
                     ></div>
                     <h2 className="text-[1.1rem] sm:text-[1.5rem] font-[700] mb-[10px]">
-                      {item.title}
+                      {item?.title}
                     </h2>
-                    <h3>{item.date}</h3>
+                    <h3>{item?.date}</h3>
                   </div>
                 );
               })
@@ -103,13 +103,13 @@ const Notes = ({
                   </Link>
                   <div
                     className={`w-3 h-3 sm:w-[18px] sm:h-[18px] rounded-full absolute top-2 ${
-                      item.hover ? "right-[47%]" : "right-2"
+                      item?.hover ? "right-[47%]" : "right-2"
                     } bg-[#252525] transition-all duration-500`}
                   ></div>
                   <h2 className="text-[1.1rem] sm:text-[1.5rem] font-[700] mb-[10px]">
-                    {item.title}
+                    {item?.title}
                   </h2>
-                  <h3>{item.date}</h3>
+                  <h3>{item?.date}</h3>
                 </div>
               );
             })}

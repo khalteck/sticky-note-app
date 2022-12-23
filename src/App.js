@@ -93,12 +93,11 @@ function App() {
     setShowLoader(true);
 
     try {
-      const user = await createUserWithEmailAndPassword(
+      await createUserWithEmailAndPassword(
         auth,
         regForm.email,
         regForm.password
       );
-      console.log(user);
       setShowLoader(false);
       navigate("/notes");
       await createUserDocument(regForm.email, regForm.displayName);
@@ -115,13 +114,11 @@ function App() {
     setShowLoader(true);
 
     try {
-      const user = await signInWithEmailAndPassword(
+      await signInWithEmailAndPassword(
         auth,
         loginForm.email,
         loginForm.password
       );
-
-      console.log(user);
       setShowLoader(false);
       navigate("/notes");
     } catch (error) {
@@ -140,7 +137,9 @@ function App() {
 
   //to set the default notes in state
   const [note, setNote] = useState(notedata);
-  const [userNote, setUserNote] = useState(userNoteData);
+  const [userNote, setUserNote] = useState(
+    JSON.parse(localStorage.getItem("stickyNotes")) || userNoteData
+  );
 
   //to set hover state of each sticky note
   function handleNoteHover(index) {
@@ -159,7 +158,7 @@ function App() {
     setNote(newNote);
     const newUserNote = [...userNote];
     newUserNote[index].hover = false;
-    setNote(newUserNote);
+    setUserNote(newUserNote);
   }
 
   //to handle the click state of each sticky note
@@ -169,7 +168,7 @@ function App() {
     setNote(newNote);
     const newUserNote = [...userNote];
     newUserNote[index].hover = false;
-    setNote(newUserNote);
+    setUserNote(newUserNote);
   }
 
   //to show and hide password
@@ -183,6 +182,65 @@ function App() {
   function handleHideWelcome() {
     setWelcomeMessage((prev) => !prev);
   }
+
+  //to control create note input
+  const [newNote, setNewNote] = useState({
+    title: "",
+    body: "",
+  });
+
+  //to handle form input change chnage
+  function handleNewNoteChange(event) {
+    const { id, value } = event.target;
+    setNewNote((prevState) => {
+      return {
+        ...prevState,
+        [id]: value,
+      };
+    });
+  }
+
+  //to formate date
+  const date = new Date();
+  const formattedDate = date
+    .toLocaleDateString("en-GB", {
+      day: "numeric",
+      month: "short",
+      year: "numeric",
+    })
+    .replace(/ /g, "-");
+
+  //to add new sticky note
+  function addNote(title, body) {
+    const newNotes = [
+      {
+        id: userNote.length + 1,
+        title: title,
+        date: formattedDate,
+        body: body,
+        hover: false,
+      },
+      ...userNote,
+    ];
+    setUserNote(newNotes);
+  }
+
+  //to create new sticky note
+  function handleCreate(event) {
+    event.preventDefault();
+    if (!newNote) {
+      return;
+    }
+    addNote(newNote.title, newNote.body);
+    navigate("/notes");
+    //setTodos(savedList[0])
+  }
+
+  //to save created sticky notes to local storage
+  useEffect(() => {
+    localStorage.setItem("stickyNotes", JSON.stringify(userNote));
+  }, [userNote]);
+
   return (
     <Routes>
       <Route
@@ -217,6 +275,7 @@ function App() {
         element={
           <Detail
             note={note}
+            userNote={userNote}
             user={user}
             currentUserFromDb={currentUserFromDb}
             logout={logout}
@@ -230,6 +289,9 @@ function App() {
             user={user}
             currentUserFromDb={currentUserFromDb}
             logout={logout}
+            handleNewNoteChange={handleNewNoteChange}
+            handleCreate={handleCreate}
+            newNote={newNote}
           />
         }
       />
