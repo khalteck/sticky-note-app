@@ -43,7 +43,7 @@ const Create = ({
               id="title"
               onChange={handleNewNoteChange}
               placeholder="Note title"
-              className="w-full bg-rose-400/20 text-[1.5rem] my-4 p-3 outline-none rounded-lg"
+              className="w-full bg-rose-400/20 text-[1.25rem] sm:text-[1.5rem] my-4 p-3 outline-none rounded-lg"
               required
             />
             <h2 className="text-[1rem] mt-5 text-[#ffab91]">
@@ -58,7 +58,7 @@ const Create = ({
               id="body"
               onChange={handleNewNoteChange}
               placeholder="Note body"
-              className="w-full h-[180px] bg-[#ffab91]/20 text-[1.5rem] my-4 p-3 outline-none rounded-lg"
+              className="w-full h-[180px] bg-[#ffab91]/20 text-[1rem] sm:text-[1.5rem] my-4 p-3 outline-none rounded-lg"
               required
             />
           </div>

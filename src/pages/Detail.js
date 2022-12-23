@@ -48,7 +48,7 @@ const Detail = ({ note, userNote, user, logout, currentUserFromDb }) => {
             )}
           </div>
         </div>
-        <div className="w-full p-5 sm:p-8 mt-16 border-2 border-[#ffab91] rounded-lg">
+        <div className="w-full min-h-[200px] p-5 sm:p-8 mt-16 border-2 border-[#ffab91] rounded-lg">
           {!user && <p className="text-[1.25rem]">{eachNote?.body}</p>}
           {user && <p className="text-[1.25rem]">{eachUserNote?.body}</p>}
         </div>
