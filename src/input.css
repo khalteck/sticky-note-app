@@ -26,4 +26,15 @@
       transform: rotate(5deg);
     }
   }
+  .swell {
+    animation: swell 1s ease-out;
+  }
+  @keyframes swell {
+    0% {
+      transform: scale(0, 0);
+    }
+    100% {
+      transform: scale(1, 1);
+    }
+  }
 }

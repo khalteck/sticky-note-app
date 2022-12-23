@@ -31,18 +31,18 @@ const Notes = ({
               Hi {currentUserFromDb?.displayName}, welcome to your library.
             </p>
             <img
-              className="w-[35px] h-[35px] cursor-pointer mr-[25px] absolute top-1/2 right-0 translate-y-[-50%]"
+              className="w-8 h-8 cursor-pointer mr-6 absolute top-1/2 right-0 translate-y-[-50%]"
               alt=""
               src={close}
               onClick={handleHideWelcome}
             />
           </div>
         )}
-        <h1 className="text-[2.5rem] mb-8 sm:mb-[50px] font-[700] tracking-wider">
+        <h1 className="text-[2.5rem] mb-8 sm:mb-12 font-bold tracking-wider">
           {currentUserFromDb?.displayName}'s notes
         </h1>
         {user && (
-          <div className="w-full grid grid-cols-2 sm:grid-cols-4 gap-[20px] text-[#252525]">
+          <div className="w-full grid grid-cols-2 sm:grid-cols-4 gap-5 text-[#252525]">
             {userNote.length > 0 ? (
               userNote?.map((item, index) => {
                 return (
@@ -51,7 +51,7 @@ const Notes = ({
                     onMouseOver={() => handleNoteHover(index)}
                     onMouseOut={() => handleNoteOut(index)}
                     onClick={() => handleClick(index)}
-                    className="p-4 sm:p-[24px] bg-rose-400 cursor-pointer even:bg-[#ffab91] first:bg-[#e7ed9b] last:bg-[#cf94da] first:row-span-2 rounded-lg relative"
+                    className="p-4 sm:p-6 bg-rose-400 cursor-pointer even:bg-[#ffab91] first:bg-[#e7ed9b] last:bg-[#cf94da] first:row-span-2 rounded-lg relative"
                   >
                     <Link to={`/note/${item.id}`}>
                       <div className="overlay w-full h-full absolute top-0 left-0"></div>
@@ -61,7 +61,7 @@ const Notes = ({
                         item?.hover ? "right-[47%]" : "right-2"
                       } bg-[#252525] transition-all duration-500`}
                     ></div>
-                    <h2 className="text-[1.1rem] sm:text-[1.5rem] font-[700] mb-[10px]">
+                    <h2 className="text-[1.1rem] sm:text-[1.5rem] font-bold mb-2">
                       {item?.title}
                     </h2>
                     <h3>{item?.date}</h3>
@@ -77,7 +77,7 @@ const Notes = ({
                 />
                 <p className="font-bold text-[2rem]">No notes yet...</p>
                 <Link to="/create">
-                  <button className="bg-rose-500 text-[0.90rem] mt-8 text-white sm:mt-[50px] px-[20px] py-[10px] rounded-sm hover:bg-rose-400 hover:translate-y-[6px] transition-all duration-300">
+                  <button className="bg-rose-500 text-[0.90rem] mt-8 text-white sm:mt-12 px-5 py-2 rounded-sm hover:bg-rose-400 hover:translate-y-[6px] transition-all duration-300">
                     Create new note
                   </button>
                 </Link>
@@ -88,7 +88,7 @@ const Notes = ({
         )}
 
         {!user && (
-          <div className="w-full grid grid-cols-2 sm:grid-cols-4 gap-[20px] text-[#252525]">
+          <div className="w-full grid grid-cols-2 sm:grid-cols-4 gap-5 text-[#252525]">
             {note?.map((item, index) => {
               return (
                 <div
@@ -96,7 +96,7 @@ const Notes = ({
                   onMouseOver={() => handleNoteHover(index)}
                   onMouseOut={() => handleNoteOut(index)}
                   onClick={() => handleClick(index)}
-                  className="p-4 sm:p-[24px] bg-rose-400 cursor-pointer even:bg-[#ffab91] first:bg-[#e7ed9b] last:bg-[#cf94da] first:row-span-2 rounded-lg relative"
+                  className="p-4 sm:p-6 bg-rose-400 cursor-pointer even:bg-[#ffab91] first:bg-[#e7ed9b] last:bg-[#cf94da] first:row-span-2 rounded-lg relative"
                 >
                   <Link to={`/note/${item.id}`}>
                     <div className="overlay w-full h-full absolute top-0 left-0"></div>
@@ -106,7 +106,7 @@ const Notes = ({
                       item?.hover ? "right-[47%]" : "right-2"
                     } bg-[#252525] transition-all duration-500`}
                   ></div>
-                  <h2 className="text-[1.1rem] sm:text-[1.5rem] font-[700] mb-[10px]">
+                  <h2 className="text-[1.1rem] sm:text-[1.5rem] font-bold mb-2">
                     {item?.title}
                   </h2>
                   <h3>{item?.date}</h3>

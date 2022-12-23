@@ -24,32 +24,32 @@ const Header = ({ user, logout, currentUserFromDb }) => {
   return (
     <header>
       {/* desktop header */}
-      <div className="w-full bg-[#252525] px-[50px] lg:px-[100px] fixed top-0 left-0 border-b border-slate-600 sm:flex items-center z-[100] hidden">
+      <div className="w-full bg-[#252525] px-12 lg:px-[100px] fixed top-0 left-0 border-b border-slate-600 sm:flex items-center z-[100] hidden">
         <Link to="/" className="mr-auto">
           <div className="flex items-center gap-[0px] ml-[-10px] cursor-pointer">
-            <img alt="logo" src={logo} className="w-[60px] h-[60px]" />
+            <img alt="logo" src={logo} className="w-16 h-16" />
             <p className="font-dyna text-[1.5rem] text-rose-300 tracking-widest">
               Note app
             </p>
           </div>
         </Link>
         <nav className="w-[65%] flex items-center">
-          <div className="flex items-center gap-6 lg:gap-[60px] mr-auto">
+          <div className="flex items-center gap-6 lg:gap-16 mr-auto">
             <Link
               to="/"
-              className="cursor-pointer px-[10px] py-[5px] rounded-md hover:bg-rose-400 hover:translate-y-[6px] transition-all duration-300"
+              className="cursor-pointer px-2 py-1 rounded-md hover:bg-rose-400 hover:translate-y-[6px] transition-all duration-300"
             >
               Home
             </Link>
             <Link
               to="/notes"
-              className="cursor-pointer px-[10px] py-[5px] rounded-md hover:bg-rose-400 hover:translate-y-[6px] transition-all duration-300"
+              className="cursor-pointer px-2 py-1 rounded-md hover:bg-rose-400 hover:translate-y-[6px] transition-all duration-300"
             >
               Notes
             </Link>
             <Link
               to="/create"
-              className="cursor-pointer px-[10px] py-[5px] rounded-md hover:bg-rose-400 hover:translate-y-[6px] transition-all duration-300"
+              className="cursor-pointer px-2 py-1 rounded-md hover:bg-rose-400 hover:translate-y-[6px] transition-all duration-300"
             >
               Create
             </Link>
@@ -57,12 +57,12 @@ const Header = ({ user, logout, currentUserFromDb }) => {
           {!user && (
             <div className="flex">
               <Link to="/login">
-                <button className="bg-[#ffab91] font-[700] text-[0.90rem] mr-[20px] px-[20px] py-[5px] rounded-md hover:bg-rose-500 hover:translate-y-[6px] transition-all duration-300">
+                <button className="bg-[#ffab91] font-bold text-[0.90rem] mr-5 px-5 py-1 rounded-md hover:bg-rose-500 hover:translate-y-[6px] transition-all duration-300">
                   Sign In
                 </button>
               </Link>
               <Link to="/register">
-                <button className="bg-rose-400 font-[700] text-[0.90rem] px-[20px] py-[5px] rounded-md hover:bg-rose-500 hover:translate-y-[6px] transition-all duration-300">
+                <button className="bg-rose-400 font-bold text-[0.90rem] px-5 py-1 rounded-md hover:bg-rose-500 hover:translate-y-[6px] transition-all duration-300">
                   Sign Up
                 </button>
               </Link>
@@ -76,7 +76,7 @@ const Header = ({ user, logout, currentUserFromDb }) => {
               </div>
               <button
                 onClick={logout}
-                className="bg-rose-500 font-[700] text-[0.90rem] px-[20px] py-[5px] rounded-md hover:bg-rose-400 hover:translate-y-[6px] transition-all duration-300"
+                className="bg-rose-500 font-bold text-[0.90rem] px-5 py-1 rounded-md hover:bg-rose-400 hover:translate-y-[6px] transition-all duration-300"
               >
                 logout
               </button>
@@ -87,11 +87,11 @@ const Header = ({ user, logout, currentUserFromDb }) => {
 
       {/* mobile header */}
       <div
-        className={`sm:hidden w-full h-[70px] px-[20px] bg-[#252525] fixed top-0 left-0 z-[100] border-b-[0px] border-b-[#47a3b3] flex justify-between items-center shadow-md`}
+        className={`sm:hidden w-full h-[70px] px-5 bg-[#252525] fixed top-0 left-0 z-[100] border-b-[0px] border-b-[#47a3b3] flex justify-between items-center shadow-md`}
       >
         <Link to="/" className="mr-auto">
           <div className="flex items-center gap-[0px] ml-[-10px] cursor-pointer">
-            <img alt="logo" src={logo} className="w-[60px] h-[60px]" />
+            <img alt="logo" src={logo} className="w-16 h-16" />
             <p className="font-dyna text-[1.5rem] text-rose-300 tracking-widest">
               Note app
             </p>
@@ -107,7 +107,7 @@ const Header = ({ user, logout, currentUserFromDb }) => {
         {openMenu && (
           <div className="w-full h-[100vh] z-[200] bg-black/80 fixed top-0 left-0">
             <img
-              className="w-[35px] h-[35px] cursor-pointer mr-[25px] absolute top-[30px] right-[10px]"
+              className="w-[35px] h-[35px] cursor-pointer mr-[25px] absolute top-[30px] right-2"
               alt=""
               src={close}
               onClick={handleClick}

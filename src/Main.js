@@ -32,7 +32,7 @@ const Main = ({ user, logout, currentUserFromDb }) => {
                   src={crown}
                   className="w-[80px] h-[80px] hidden sm:block absolute left-[-5%] top-[-40px]"
                 />
-                <h1 className="text-[1.75rem] sm:text-[2.5rem] font-[700] mb-5 sm:mb-[30px]">
+                <h1 className="text-[1.75rem] sm:text-[2.5rem] font-bold mb-5 sm:mb-[30px]">
                   Create & save your sticky notes for free!
                 </h1>
               </div>
@@ -46,14 +46,14 @@ const Main = ({ user, logout, currentUserFromDb }) => {
               </p>
               {!user && (
                 <Link to="/register">
-                  <button className="bg-rose-500 text-[0.90rem] mt-8 sm:mt-[50px] px-[20px] py-[10px] rounded-sm hover:bg-rose-400 hover:translate-y-[6px] transition-all duration-300">
+                  <button className="bg-rose-500 text-[0.90rem] mt-8 sm:mt-12 px-5 py-2 rounded-sm hover:bg-rose-400 hover:translate-y-[6px] transition-all duration-300">
                     Sign Up to get started
                   </button>
                 </Link>
               )}
               {user && (
                 <Link to="/create">
-                  <button className="bg-rose-500 text-[0.90rem] mt-8 sm:mt-[50px] px-[20px] py-[10px] rounded-sm hover:bg-rose-400 hover:translate-y-[6px] transition-all duration-300">
+                  <button className="bg-rose-500 text-[0.90rem] mt-8 sm:mt-12 px-5 py-2 rounded-sm hover:bg-rose-400 hover:translate-y-[6px] transition-all duration-300">
                     Create new note
                   </button>
                 </Link>

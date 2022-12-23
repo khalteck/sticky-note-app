@@ -241,6 +241,9 @@ function App() {
     localStorage.setItem("stickyNotes", JSON.stringify(userNote));
   }, [userNote]);
 
+  //to show modal in 3 seconds
+  const [showModal, setShowModal] = useState(false);
+
   return (
     <Routes>
       <Route
@@ -292,6 +295,8 @@ function App() {
             handleNewNoteChange={handleNewNoteChange}
             handleCreate={handleCreate}
             newNote={newNote}
+            showModal={showModal}
+            setShowModal={setShowModal}
           />
         }
       />
