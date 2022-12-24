@@ -17,6 +17,7 @@ const Notes = ({
   handleHideWelcome,
   welcomeMessage,
   waitForUserFromDb,
+  notesFromDb,
 }) => {
   // console.log(userNote);
   return (
@@ -47,11 +48,11 @@ const Notes = ({
         </h1>
         {user && (
           <div className="w-full grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-5 text-[#252525]">
-            {userNote.length > 0 ? (
-              userNote?.map((item, index) => {
+            {notesFromDb.length > 0 ? (
+              notesFromDb?.map((item, index) => {
                 return (
                   <div
-                    key={item.id}
+                    key={index}
                     onMouseOver={() => handleNoteHover(index)}
                     onMouseOut={() => handleNoteOut(index)}
                     onClick={() => handleClick(index)}
@@ -68,7 +69,7 @@ const Notes = ({
                     <h2 className="text-[1.1rem] sm:text-[1.5rem] font-bold mb-2">
                       {item?.title}
                     </h2>
-                    <h3>{item?.date}</h3>
+                    <h3>{item?.createdAt}</h3>
                   </div>
                 );
               })

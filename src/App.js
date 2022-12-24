@@ -15,8 +15,16 @@ import {
   signInWithEmailAndPassword,
   signOut,
 } from "firebase/auth";
-import { auth, createUserDocument, db } from "./firebase/firebase-config";
-import { getDocs, collection, query, where } from "firebase/firestore";
+import { auth, db } from "./firebase/firebase-config";
+import {
+  getDocs,
+  addDoc,
+  collection,
+  query,
+  where,
+  setDoc,
+  doc,
+} from "firebase/firestore";
 
 function App() {
   //to save reg form input
@@ -90,10 +98,22 @@ function App() {
     getUserDetails();
   }, [user]);
 
-  // console.log(currentUserFromDb);
-
   const [showLoader, setShowLoader] = useState(false);
   const navigate = useNavigate();
+
+  //function to create user doc on sign up
+  const createUserDocument = async (email, name) => {
+    try {
+      const docRef = await addDoc(collection(db, "users"), {
+        email: email,
+        displayName: name,
+        createdAt: new Date(),
+      });
+      console.log("Document written with ID: ", docRef.id);
+    } catch (err) {
+      console.error("Error adding document: ", err);
+    }
+  };
 
   //to handle reg form data submit to firebase
   const register = async (e) => {
@@ -218,6 +238,42 @@ function App() {
     })
     .replace(/ /g, "-");
 
+  const [notesDataFromDb, setNotesDataFromDb] = useState([]);
+  const [updateNotes, setUpdateNotes] = useState(false);
+
+  //to send created notes to db
+  const createNoteDocument = async (title, body) => {
+    try {
+      const querySnapshot = await getDocs(collection(db, "notes"));
+      let notes = [];
+      querySnapshot.forEach((doc) => {
+        notes.push(doc.data());
+      });
+      setNotesDataFromDb(notes);
+
+      await setDoc(
+        doc(
+          db,
+          "notes",
+          `${currentUserFromDb?.displayName}-${
+            notesDataFromDb.length + 1
+          }-${title.replace(/ /g, "_")}`
+        ),
+        {
+          id: notesDataFromDb.length + 1,
+          owner: currentUserFromDb?.email,
+          title: title,
+          body: body,
+          createdAt: formattedDate,
+        }
+      );
+      console.log("Note created");
+      setUpdateNotes((prev) => !prev);
+    } catch (err) {
+      console.error("Error creating note: ", err);
+    }
+  };
+
   //to add new sticky note
   function addNote(title, body) {
     const newNotes = [
@@ -240,14 +296,39 @@ function App() {
       return;
     }
     addNote(newNote.title, newNote.body);
+    createNoteDocument(newNote.title, newNote.body);
     navigate("/notes");
-    //setTodos(savedList[0])
+    // window.location.reload();
   }
 
   //to save created sticky notes to local storage
   useEffect(() => {
     localStorage.setItem("stickyNotes", JSON.stringify(userNote));
   }, [userNote]);
+
+  //to get notes data from db
+  const [notesFromDb, setNotesFromDb] = useState({});
+
+  useEffect(() => {
+    const getNotes = async () => {
+      const userQuery = query(
+        collection(db, "notes"),
+        where("owner", "==", user?.email)
+      );
+      try {
+        const querySnapshot = await getDocs(userQuery);
+        let notes = [];
+        querySnapshot.forEach((doc) => {
+          notes.push(doc.data());
+        });
+
+        setNotesFromDb(notes);
+      } catch (err) {
+        console.log(err.message);
+      }
+    };
+    getNotes();
+  }, [user, updateNotes]);
 
   //to show modal in 3 seconds
   const [showModal, setShowModal] = useState(false);
@@ -280,6 +361,7 @@ function App() {
             welcomeMessage={welcomeMessage}
             handleHideWelcome={handleHideWelcome}
             waitForUserFromDb={waitForUserFromDb}
+            notesFromDb={notesFromDb}
           />
         }
       />
