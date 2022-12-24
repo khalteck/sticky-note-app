@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import Detail from "./pages/Detail";
 import "./output.css";
 import notedata from "./data/notedatamock.json";
-import userNoteData from "./data/userNoteData.json";
+// import userNoteData from "./data/userNoteData.json";
 import Create from "./pages/Create";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
@@ -24,6 +24,7 @@ import {
   where,
   setDoc,
   doc,
+  deleteDoc,
 } from "firebase/firestore";
 
 function App() {
@@ -165,18 +166,18 @@ function App() {
 
   //to set the default notes in state
   const [note, setNote] = useState(notedata);
-  const [userNote, setUserNote] = useState(
-    JSON.parse(localStorage.getItem("stickyNotes")) || userNoteData
-  );
+  // const [userNote, setUserNote] = useState(
+  //   JSON.parse(localStorage.getItem("stickyNotes")) || userNoteData
+  // );
 
   //to set hover state of each sticky note
   function handleNoteHover(index) {
     const newNote = [...note];
     newNote[index].hover = true;
     setNote(newNote);
-    const newUserNote = [...userNote];
+    const newUserNote = [...notesDataFromDb];
     newUserNote[index].hover = true;
-    setUserNote(newUserNote);
+    setNotesDataFromDb(newUserNote);
   }
 
   //to set hover out state of each sticky note
@@ -184,9 +185,9 @@ function App() {
     const newNote = [...note];
     newNote[index].hover = false;
     setNote(newNote);
-    const newUserNote = [...userNote];
+    const newUserNote = [...notesDataFromDb];
     if (newUserNote) newUserNote[index].hover = false;
-    setUserNote(newUserNote);
+    setNotesDataFromDb(newUserNote);
   }
 
   //to handle the click state of each sticky note
@@ -194,9 +195,9 @@ function App() {
     const newNote = [...note];
     newNote[index].hover = false;
     setNote(newNote);
-    const newUserNote = [...userNote];
+    const newUserNote = [...notesDataFromDb];
     if (newUserNote) newUserNote[index].hover = false;
-    setUserNote(newUserNote);
+    setNotesDataFromDb(newUserNote);
   }
 
   //to show and hide password
@@ -246,6 +247,9 @@ function App() {
   );
   // console.log(notesDataFromDb);
   const [updateNotes, setUpdateNotes] = useState(false);
+  let notesFromDbSavedInLocalStorage = JSON.parse(
+    localStorage.getItem("allNotesDataFromDb")
+  );
 
   //to send created notes to db
   const createNoteDocument = async (title, body) => {
@@ -262,15 +266,16 @@ function App() {
           db,
           "notes",
           `${currentUserFromDb?.displayName}_${
-            JSON.parse(localStorage.getItem("allNotesDataFromDb")).length + 1
+            notesFromDbSavedInLocalStorage.length
           }_${title.replace(/ /g, "_")}`
         ),
         {
-          id: JSON.parse(localStorage.getItem("allNotesDataFromDb")).length + 1,
+          id: notesFromDbSavedInLocalStorage.length,
           owner: currentUserFromDb?.email,
           title: title,
           body: body,
           createdAt: formattedDate,
+          hover: false,
         }
       );
       console.log("Note created");
@@ -288,19 +293,20 @@ function App() {
     localStorage.setItem("notesDataFromDb", JSON.stringify(notesDataFromDb));
   }, [notesDataFromDb]);
 
-  //to add new sticky note
-  function addNote(title, body) {
-    const newNotes = [
-      {
-        id: userNote.length + 1,
-        title: title,
-        date: formattedDate,
-        body: body,
-        hover: false,
-      },
-      ...userNote,
-    ];
-    setUserNote(newNotes);
+  //to delete note from db
+  const deleteDocument = async (userName, id, title) => {
+    // console.log(`${userName}_${id}_${title.replace(/ /g, "_")}`);
+    await deleteDoc(
+      doc(db, "notes", `${userName}_${id}_${title.replace(/ /g, "_")}`)
+    );
+    console.log("note deleted");
+  };
+
+  //to delete sticky note
+  function handleDelete(user, id, title) {
+    deleteDocument(user, id, title);
+    navigate("/notes");
+    setUpdateNotes((prev) => !prev);
   }
 
   //to create new sticky note
@@ -309,16 +315,10 @@ function App() {
     if (!newNote) {
       return;
     }
-    addNote(newNote.title, newNote.body);
+
     createNoteDocument(newNote.title, newNote.body);
     navigate("/notes");
-    // window.location.reload();
   }
-
-  //to save created sticky notes to local storage
-  useEffect(() => {
-    localStorage.setItem("stickyNotes", JSON.stringify(userNote));
-  }, [userNote]);
 
   //to get notes data from db
 
@@ -365,7 +365,6 @@ function App() {
           <Notes
             user={user}
             note={note}
-            userNote={userNote}
             handleNoteHover={handleNoteHover}
             handleNoteOut={handleNoteOut}
             handleClick={handleClick}
@@ -383,11 +382,11 @@ function App() {
         element={
           <Detail
             note={note}
-            userNote={userNote}
             user={user}
             currentUserFromDb={currentUserFromDb}
             logout={logout}
             notesDataFromDb={notesDataFromDb}
+            handleDelete={handleDelete}
           />
         }
       />

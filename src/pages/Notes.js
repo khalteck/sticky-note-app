@@ -7,7 +7,6 @@ import Loader from "../components/Loader";
 
 const Notes = ({
   note,
-  userNote,
   user,
   handleNoteHover,
   handleNoteOut,

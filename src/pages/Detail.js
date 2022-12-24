@@ -4,11 +4,11 @@ import Header from "../Header";
 
 const Detail = ({
   note,
-  userNote,
   user,
   logout,
   currentUserFromDb,
   notesDataFromDb,
+  handleDelete,
 }) => {
   const { id } = useParams();
   const eachNote = note.filter((item) => item.id === Number(id))[0];
@@ -24,11 +24,30 @@ const Detail = ({
         currentUserFromDb={currentUserFromDb}
       />
       <div className="py-[100px] px-3 sm:px-[100px]">
-        <Link to="/notes">
-          <button className="bg-rose-500/80 font-bold text-[0.90rem] mb-8 px-5 py-1 rounded-md hover:bg-rose-400 hover:translate-y-[6px] transition-all duration-300">
-            Back
-          </button>
-        </Link>
+        <div className="w-full flex justify-between items-start">
+          <Link to="/notes">
+            <button className="bg-rose-500/80 font-bold text-[0.90rem] mb-8 px-5 py-1 rounded-md hover:bg-rose-400 hover:translate-y-[6px] transition-all duration-300">
+              Back
+            </button>
+          </Link>
+          <div className="flex gap-4 justify-between items-center">
+            <button className="bg-rose-500/80 font-bold text-[0.90rem] mb-8 px-5 py-1 rounded-md hover:bg-rose-400 hover:translate-y-[6px] transition-all duration-300">
+              Edit
+            </button>
+            <button
+              onClick={() =>
+                handleDelete(
+                  currentUserFromDb.displayName,
+                  id,
+                  eachUserNote.title
+                )
+              }
+              className="bg-rose-500/80 font-bold text-[0.90rem] mb-8 px-5 py-1 rounded-md hover:bg-rose-400 hover:translate-y-[6px] transition-all duration-300"
+            >
+              Delete
+            </button>
+          </div>
+        </div>
         <div className="w-full sm:w-[fit-content] p-5 sm:p-8 border-2 border-rose-500 rounded-lg">
           <div>
             {!user && (
