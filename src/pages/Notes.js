@@ -44,7 +44,8 @@ const Notes = ({
           </div>
         )}
         <h1 className="text-[1.75rem] sm:text-[2.5rem] mb-8 sm:mb-12 font-bold tracking-wider">
-          {user && `${currentUserFromDb?.displayName}'s`} {user ? "n" : "N"}otes
+          {user && currentUserFromDb && `${currentUserFromDb?.displayName}'s`}{" "}
+          {user ? "n" : "N"}otes
         </h1>
         {user && (
           <div className="w-full grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-5 text-[#252525]">
