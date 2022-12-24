@@ -374,6 +374,7 @@ function App() {
             user={user}
             currentUserFromDb={currentUserFromDb}
             logout={logout}
+            notesFromDb={notesFromDb}
           />
         }
       />

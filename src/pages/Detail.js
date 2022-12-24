@@ -2,10 +2,17 @@ import { Link, useParams } from "react-router-dom";
 import ScrollToTop from "../ScrollToTop";
 import Header from "../Header";
 
-const Detail = ({ note, userNote, user, logout, currentUserFromDb }) => {
+const Detail = ({
+  note,
+  userNote,
+  user,
+  logout,
+  currentUserFromDb,
+  notesFromDb,
+}) => {
   const { id } = useParams();
   const eachNote = note.filter((item) => item.id === Number(id))[0];
-  const eachUserNote = userNote.filter((item) => item.id === Number(id))[0];
+  const eachUserNote = notesFromDb.filter((item) => item.id === Number(id))[0];
 
   return (
     <>
