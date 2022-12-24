@@ -265,12 +265,14 @@ function App() {
         doc(
           db,
           "notes",
-          `${currentUserFromDb?.displayName}_${
+          `${currentUserFromDb?.displayName}_${title.replace(/ /g, "_")}0${
             notesFromDbSavedInLocalStorage.length
           }_${title.replace(/ /g, "_")}`
         ),
         {
-          id: notesFromDbSavedInLocalStorage.length,
+          id: `${title.replace(/ /g, "_")}0${
+            notesFromDbSavedInLocalStorage.length
+          }`,
           owner: currentUserFromDb?.email,
           title: title,
           body: body,

@@ -12,9 +12,7 @@ const Detail = ({
 }) => {
   const { id } = useParams();
   const eachNote = note.filter((item) => item.id === Number(id))[0];
-  const eachUserNote = notesDataFromDb.filter(
-    (item) => item.id === Number(id)
-  )[0];
+  const eachUserNote = notesDataFromDb.filter((item) => item.id === id)[0];
 
   return (
     <>
@@ -39,7 +37,7 @@ const Detail = ({
                 handleDelete(
                   currentUserFromDb.displayName,
                   id,
-                  eachUserNote.title
+                  eachUserNote?.title
                 )
               }
               className="bg-rose-500/80 font-bold text-[0.90rem] mb-8 px-5 py-1 rounded-md hover:bg-rose-400 hover:translate-y-[6px] transition-all duration-300"
