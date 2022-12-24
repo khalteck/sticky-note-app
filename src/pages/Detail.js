@@ -8,11 +8,13 @@ const Detail = ({
   user,
   logout,
   currentUserFromDb,
-  notesFromDb,
+  notesDataFromDb,
 }) => {
   const { id } = useParams();
   const eachNote = note.filter((item) => item.id === Number(id))[0];
-  const eachUserNote = notesFromDb.filter((item) => item.id === Number(id))[0];
+  const eachUserNote = notesDataFromDb.filter(
+    (item) => item.id === Number(id)
+  )[0];
 
   return (
     <>

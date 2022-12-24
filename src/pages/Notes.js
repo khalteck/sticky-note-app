@@ -17,7 +17,7 @@ const Notes = ({
   handleHideWelcome,
   welcomeMessage,
   waitForUserFromDb,
-  notesFromDb,
+  notesDataFromDb,
 }) => {
   // console.log(userNote);
   return (
@@ -48,8 +48,8 @@ const Notes = ({
         </h1>
         {user && (
           <div className="w-full grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-5 text-[#252525]">
-            {notesFromDb.length > 0 ? (
-              notesFromDb?.map((item, index) => {
+            {notesDataFromDb.length > 0 ? (
+              notesDataFromDb?.map((item, index) => {
                 return (
                   <div
                     key={index}

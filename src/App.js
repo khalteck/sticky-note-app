@@ -238,7 +238,13 @@ function App() {
     })
     .replace(/ /g, "-");
 
-  const [notesDataFromDb, setNotesDataFromDb] = useState([]);
+  const [notesDataFromDb, setNotesDataFromDb] = useState(
+    JSON.parse(localStorage.getItem("notesDataFromDb")) || []
+  );
+  const [allNotesFromDb, setAllNotesFromDb] = useState(
+    JSON.parse(localStorage.getItem("allNotesDataFromDb")) || []
+  );
+  // console.log(notesDataFromDb);
   const [updateNotes, setUpdateNotes] = useState(false);
 
   //to send created notes to db
@@ -249,18 +255,18 @@ function App() {
       querySnapshot.forEach((doc) => {
         notes.push(doc.data());
       });
-      setNotesDataFromDb(notes);
+      setAllNotesFromDb(notes);
 
       await setDoc(
         doc(
           db,
           "notes",
-          `${currentUserFromDb?.displayName}-${
-            notesDataFromDb.length + 1
-          }-${title.replace(/ /g, "_")}`
+          `${currentUserFromDb?.displayName}_${
+            JSON.parse(localStorage.getItem("allNotesDataFromDb")).length + 1
+          }_${title.replace(/ /g, "_")}`
         ),
         {
-          id: notesDataFromDb.length + 1,
+          id: JSON.parse(localStorage.getItem("allNotesDataFromDb")).length + 1,
           owner: currentUserFromDb?.email,
           title: title,
           body: body,
@@ -273,6 +279,14 @@ function App() {
       console.error("Error creating note: ", err);
     }
   };
+
+  useEffect(() => {
+    localStorage.setItem("allNotesDataFromDb", JSON.stringify(allNotesFromDb));
+  }, [allNotesFromDb]);
+
+  useEffect(() => {
+    localStorage.setItem("notesDataFromDb", JSON.stringify(notesDataFromDb));
+  }, [notesDataFromDb]);
 
   //to add new sticky note
   function addNote(title, body) {
@@ -307,7 +321,6 @@ function App() {
   }, [userNote]);
 
   //to get notes data from db
-  const [notesFromDb, setNotesFromDb] = useState({});
 
   useEffect(() => {
     const getNotes = async () => {
@@ -322,7 +335,7 @@ function App() {
           notes.push(doc.data());
         });
 
-        setNotesFromDb(notes);
+        setNotesDataFromDb(notes);
       } catch (err) {
         console.log(err.message);
       }
@@ -361,7 +374,7 @@ function App() {
             welcomeMessage={welcomeMessage}
             handleHideWelcome={handleHideWelcome}
             waitForUserFromDb={waitForUserFromDb}
-            notesFromDb={notesFromDb}
+            notesDataFromDb={notesDataFromDb}
           />
         }
       />
@@ -374,7 +387,7 @@ function App() {
             user={user}
             currentUserFromDb={currentUserFromDb}
             logout={logout}
-            notesFromDb={notesFromDb}
+            notesDataFromDb={notesDataFromDb}
           />
         }
       />
