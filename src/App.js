@@ -382,7 +382,6 @@ function App() {
   }
 
   //to get notes data from db
-
   useEffect(() => {
     const getNotes = async () => {
       const userQuery = query(
