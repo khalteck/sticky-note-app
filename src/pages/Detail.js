@@ -2,6 +2,9 @@ import { Link, useParams } from "react-router-dom";
 import ScrollToTop from "../ScrollToTop";
 import Header from "../Header";
 import Loader from "../components/Loader";
+import pencil from "../images/icons8-pencil-30.png";
+import trash from "../images/icons8-trash-26.png";
+import { useState } from "react";
 
 const Detail = ({
   note,
@@ -21,6 +24,12 @@ const Detail = ({
   const eachNote = note.filter((item) => item.id === Number(id))[0];
   const eachUserNote = notesDataFromDb.filter((item) => item.id === id)[0];
 
+  //to handle edit popup show and hide
+  const [showDeletePrompt, ssetSowDeletePrompt] = useState(false);
+  function handleDeletePrompt() {
+    ssetSowDeletePrompt((prev) => !prev);
+  }
+
   return (
     <>
       <Header
@@ -33,7 +42,20 @@ const Detail = ({
         {waitForUserFromDb && user && <Loader />}
         {/* edit note popup */}
         {showEditpopup && (
-          <div className="w-full h-screen bg-[#252525] p-5 sm:p-8 fixed top-16 left-0">
+          <div className="w-full h-screen bg-[#252525] p-5 sm:p-8 fixed top-16 left-0 z-20">
+            {/* {showDeletePrompt && (
+              <div className="w-1/2 p= bg-red-400">
+                <p>Are you sure?</p>
+                <div className="w-full flex">
+                  <button className="bg-rose-500/80 font-bold text-[0.90rem] mb-4 px-5 py-1 rounded-md hover:bg-rose-400 hover:translate-y-[6px] transition-all duration-300">
+                    Delete
+                  </button>
+                  <button className="bg-rose-500/80 font-bold text-[0.90rem] mb-4 px-5 py-1 rounded-md hover:bg-rose-400 hover:translate-y-[6px] transition-all duration-300">
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            )} */}
             <button
               onClick={() =>
                 handleEditPopup(
@@ -47,7 +69,7 @@ const Detail = ({
               Cancel edit
             </button>
             <div className="w-full h-[fit-content] sm:w-2/3 p-4 sm:p-6 border-2 border-rose-500 rounded-lg relative">
-              <div className="w-full h-full bg-rose-500/50 absolute top-0 left-0 p-2 text-center">
+              <div className="w-full h-full bg-rose-500/70 absolute top-0 left-0 sm:py-2 py-1 sm:px-6 px-4">
                 <p className="text-[0.85rem]">Titles are not editable</p>
               </div>
               <div>
@@ -117,21 +139,21 @@ const Detail = ({
           <div className="flex gap-4 justify-between items-center">
             <button
               onClick={() => handleEditPopup(id)}
-              className="bg-rose-500/80 font-bold text-[0.90rem] mb-8 px-5 py-1 rounded-md hover:bg-rose-400 hover:translate-y-[6px] transition-all duration-300"
+              className="bg-inherit font-bold text-[0.90rem] mb-8 p-4 sm:p-5 rounded-full border-2 border-[#ffab91] hover:bg-[#ffab91]/50 hover:translate-y-[6px] transition-all duration-300"
             >
-              Edit
+              <img alt="edit" src={pencil} className="w-6 sm:w-8 h-6 sm:h-8" />
             </button>
             <button
-              onClick={() =>
+              onClick={() => {
                 handleDelete(
                   currentUserFromDb.displayName,
                   id,
                   eachUserNote?.title
-                )
-              }
-              className="bg-rose-500/80 font-bold text-[0.90rem] mb-8 px-5 py-1 rounded-md hover:bg-rose-400 hover:translate-y-[6px] transition-all duration-300"
+                );
+              }}
+              className="bg-inherit font-bold text-[0.90rem] mb-8 p-4 sm:p-5 rounded-full border-2 border-rose-400 hover:bg-rose-400/50 hover:translate-y-[6px] transition-all duration-300"
             >
-              Delete
+              <img alt="edit" src={trash} className="w-6 sm:w-8 h-6 sm:h-8" />
             </button>
           </div>
         </div>
