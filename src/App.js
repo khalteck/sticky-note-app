@@ -396,7 +396,10 @@ function App() {
           notes.push(doc.data());
         });
 
-        setNotesDataFromDb(notes);
+        let arranged = notes.sort(function (a, b) {
+          return b.id.charAt(b.id.length - 1) - a.id.charAt(a.id.length - 1);
+        });
+        setNotesDataFromDb(arranged);
       } catch (err) {
         console.log(err.message);
       }
