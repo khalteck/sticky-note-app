@@ -112,9 +112,13 @@ const Header = ({ user, logout, currentUserFromDb }) => {
               src={close}
               onClick={handleClick}
             />
-            <ul className="slide float-right w-[65%] h-full bg-[#252525] px-[30px] text-[1rem] text-white pt-[100px]">
+            <div
+              onClick={handleClick}
+              className="w-[35%] h-screen float-left"
+            ></div>
+            <ul className="slide float-right w-[65%] h-full bg-[#252525] px-[30px] text-[1rem] text-white pt-[100px] text-center">
               {user && (
-                <li className="my-4 flex items-center justify-center gap-2 border border-rose-400 px-2 py-1 rounded-lg">
+                <li className="w-[fit-content] my-6 mx-auto flex items-center justify-center gap-2 border-2 border-rose-400 px-2 py-1 rounded-lg">
                   <div className="text-rose-400 font-bold text-[1.25rem]">
                     {currentUserFromDb.displayName}
                   </div>
