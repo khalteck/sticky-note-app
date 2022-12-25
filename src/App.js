@@ -397,7 +397,7 @@ function App() {
         });
 
         let arranged = notes.sort(function (a, b) {
-          return b.id.charAt(b.id.length - 1) - a.id.charAt(a.id.length - 1);
+          return b.id.slice(-2) - a.id.slice(-2);
         });
         setNotesDataFromDb(arranged);
       } catch (err) {
