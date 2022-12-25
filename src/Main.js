@@ -44,7 +44,8 @@ const Main = ({ user, logout, currentUserFromDb, waitForUserFromDb }) => {
                 organise, and store your notes with this easy-to-use free tool.
                 Created notes are organized into neat rows of edittable sticky
                 notes. <br />
-                <br />- Built by <span className="text-rose-400">khalid</span>.
+                <br />- Designed and Built by{" "}
+                <span className="text-rose-400">khalid</span>.
                 <br /> Really, what will you all do without me. you're welcome.
               </p>
               {!user && (
