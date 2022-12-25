@@ -248,9 +248,9 @@ function App() {
   );
   // console.log(notesDataFromDb);
   const [updateNotes, setUpdateNotes] = useState(false);
-  let notesFromDbSavedInLocalStorage = JSON.parse(
-    localStorage.getItem("allNotesDataFromDb")
-  );
+  // let notesFromDbSavedInLocalStorage = JSON.parse(
+  //   localStorage.getItem("allNotesDataFromDb")
+  // );
 
   //to send created notes to db
   const createNoteDocument = async (title, body) => {
@@ -267,13 +267,11 @@ function App() {
           db,
           "notes",
           `${currentUserFromDb?.displayName}_${title.replace(/ /g, "_")}0${
-            notesFromDbSavedInLocalStorage.length
+            notesDataFromDb.length + 1
           }_${title.replace(/ /g, "_")}`
         ),
         {
-          id: `${title.replace(/ /g, "_")}0${
-            notesFromDbSavedInLocalStorage.length
-          }`,
+          id: `${title.replace(/ /g, "_")}0${notesDataFromDb.length + 1}`,
           owner: currentUserFromDb?.email,
           title: title,
           body: body,

@@ -41,7 +41,7 @@ const Detail = ({
         {waitForUserFromDb && user && <Loader />}
         {/* edit note popup */}
         {showEditpopup && (
-          <div className="w-full h-screen bg-[#252525] p-5 sm:p-8 fixed top-16 left-0 z-20">
+          <div className="w-full h-screen bg-[#252525] p-5 sm:p-8 fixed top-16 left-0 z-20 overflow-y-auto no-scrollbar">
             {/* {showDeletePrompt && (
               <div className="w-1/2 p= bg-red-400">
                 <p>Are you sure?</p>
