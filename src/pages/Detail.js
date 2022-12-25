@@ -24,11 +24,11 @@ const Detail = ({
   const eachNote = note.filter((item) => item.id === Number(id))[0];
   const eachUserNote = notesDataFromDb.filter((item) => item.id === id)[0];
 
-  //to handle edit popup show and hide
-  const [showDeletePrompt, ssetSowDeletePrompt] = useState(false);
-  function handleDeletePrompt() {
-    ssetSowDeletePrompt((prev) => !prev);
-  }
+  // //to handle edit popup show and hide
+  // const [showDeletePrompt, ssetSowDeletePrompt] = useState(false);
+  // function handleDeletePrompt() {
+  //   ssetSowDeletePrompt((prev) => !prev);
+  // }
 
   return (
     <>
