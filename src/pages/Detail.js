@@ -4,7 +4,6 @@ import Header from "../Header";
 import Loader from "../components/Loader";
 import pencil from "../images/icons8-pencil-30.png";
 import trash from "../images/icons8-trash-26.png";
-import { useState } from "react";
 
 const Detail = ({
   note,
