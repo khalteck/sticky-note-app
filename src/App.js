@@ -25,6 +25,7 @@ import {
   setDoc,
   doc,
   deleteDoc,
+  updateDoc,
 } from "firebase/firestore";
 
 function App() {
@@ -297,12 +298,64 @@ function App() {
 
   //to delete note from db
   const deleteDocument = async (userName, id, title) => {
-    // console.log(`${userName}_${id}_${title.replace(/ /g, "_")}`);
     await deleteDoc(
       doc(db, "notes", `${userName}_${id}_${title.replace(/ /g, "_")}`)
     );
     console.log("note deleted");
   };
+
+  //to handle edit popup show and hide
+  const [showEditpopup, setShowEditpopup] = useState(false);
+  function handleEditPopup(userName, id, title) {
+    setShowEditpopup((prev) => !prev);
+    getDocRef(userName, id, title);
+  }
+  let docRefEdit = [];
+  let docNested;
+
+  //to get note to edit from db
+  const getDocRef = (id) => {
+    docRefEdit.push(
+      notesDataFromDb.filter((item) => {
+        return item.id === id;
+      })
+    );
+    docNested = docRefEdit[0][0];
+    setEditorVal({
+      body: docNested?.body,
+    });
+  };
+
+  //to update doc
+
+  const editDocument = async (userName, id, title, body) => {
+    const docRef = doc(
+      db,
+      "notes",
+      `${userName}_${id}_${title.replace(/ /g, "_")}`
+    );
+    await updateDoc(docRef, {
+      body: body,
+    });
+    console.log("note updated!");
+    window.location.reload();
+  };
+
+  //to control update note input
+  const [editorVal, setEditorVal] = useState({
+    body: "test",
+  });
+
+  //to handle form input change chnage
+  function handleUpdateNoteChange(event) {
+    const { id, value } = event.target;
+    setEditorVal((prevState) => {
+      return {
+        ...prevState,
+        [id]: value,
+      };
+    });
+  }
 
   //to delete sticky note
   function handleDelete(user, id, title) {
@@ -320,6 +373,12 @@ function App() {
 
     createNoteDocument(newNote.title, newNote.body);
     navigate("/notes");
+  }
+
+  //to edit sticky note
+  function handleEdit(userName, id, title, body) {
+    editDocument(userName, id, title, body);
+    setShowEditpopup((prev) => !prev);
   }
 
   //to get notes data from db
@@ -389,6 +448,12 @@ function App() {
             logout={logout}
             notesDataFromDb={notesDataFromDb}
             handleDelete={handleDelete}
+            editorVal={editorVal}
+            showEditpopup={showEditpopup}
+            handleEditPopup={handleEditPopup}
+            handleUpdateNoteChange={handleUpdateNoteChange}
+            waitForUserFromDb={waitForUserFromDb}
+            handleEdit={handleEdit}
           />
         }
       />
