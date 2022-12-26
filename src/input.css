@@ -46,4 +46,8 @@
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
   }
+  #cursor {
+    /* transform: translate(-50%, -50%); */
+    pointer-events: none;
+  }
 }

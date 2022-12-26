@@ -4,17 +4,66 @@ import Header from "./Header";
 import { Link } from "react-router-dom";
 import ScrollToTop from "./ScrollToTop";
 import Loader from "./components/Loader";
+import { useEffect, useState } from "react";
 
-const Main = ({ user, logout, currentUserFromDb, waitForUserFromDb }) => {
+const Main = ({
+  user,
+  logout,
+  currentUserFromDb,
+  waitForUserFromDb,
+  currentPage,
+}) => {
+  const [coords, setCoords] = useState({ x: 0, y: 0 });
+
+  const handleMouseMove = (event) => {
+    setCoords({
+      x: event.clientX - event.target.offsetLeft,
+      y: event.clientY - event.target.offsetTop,
+    });
+  };
+
+  const [globalCoords, setGlobalCoords] = useState({ x: 0, y: 0 });
+
+  useEffect(() => {
+    // 👇️ get global mouse coordinates
+    const handleWindowMouseMove = (event) => {
+      setGlobalCoords({
+        x: event.screenX,
+        y: event.screenY,
+      });
+    };
+    window.addEventListener("mousemove", handleWindowMouseMove);
+
+    return () => {
+      window.removeEventListener("mousemove", handleWindowMouseMove);
+    };
+  }, []);
+
+  // console.log(`${coords.x}px`, `${coords.y}px`);
+
+  let style = {
+    top: `${globalCoords.y - 100}px`,
+    left: `${globalCoords.x - 100}px`,
+  };
+
   return (
     <>
       <Header
         user={user}
         logout={logout}
         currentUserFromDb={currentUserFromDb}
+        currentPage={currentPage}
       />
       <main className="bg-home bg-repeat min-h-screen">
-        <section className="w-full min-h-screen bg-[#252525]/95 relative px-3 sm:px-[100px] sm:pt-[130px] pt-20 pb-8">
+        <section
+          onMouseMove={handleMouseMove}
+          className="w-full min-h-screen bg-[#252525]/95 px-3 sm:px-[100px] sm:pt-[130px] pt-20 pb-8"
+        >
+          <div
+            style={style}
+            className={`w-12 h-12 border-2 border-rose-500 fixed z-[999] rounded-full`}
+            id="cursor"
+          ></div>
           {!waitForUserFromDb && !user && <Loader />}
           {waitForUserFromDb && user && <Loader />}
           {user && (

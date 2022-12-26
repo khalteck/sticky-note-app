@@ -1,5 +1,5 @@
 import Main from "./Main";
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
 import Notes from "./pages/Notes";
 import { useState, useEffect } from "react";
 import Detail from "./pages/Detail";
@@ -29,6 +29,9 @@ import {
 } from "firebase/firestore";
 
 function App() {
+  const location = useLocation();
+  let currentPage = location.pathname;
+
   //to save reg form input
   const [regForm, setRegForm] = useState({
     displayName: "",
@@ -418,6 +421,7 @@ function App() {
             logout={logout}
             currentUserFromDb={currentUserFromDb}
             waitForUserFromDb={waitForUserFromDb}
+            currentPage={currentPage}
           />
         }
       />
@@ -436,6 +440,7 @@ function App() {
             handleHideWelcome={handleHideWelcome}
             waitForUserFromDb={waitForUserFromDb}
             notesDataFromDb={notesDataFromDb}
+            currentPage={currentPage}
           />
         }
       />
@@ -470,6 +475,7 @@ function App() {
             newNote={newNote}
             showModal={showModal}
             setShowModal={setShowModal}
+            currentPage={currentPage}
           />
         }
       />

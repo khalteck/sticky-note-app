@@ -11,6 +11,7 @@ const Create = ({
   handleCreate,
   setShowModal,
   showModal,
+  currentPage,
 }) => {
   return (
     <>
@@ -18,6 +19,7 @@ const Create = ({
         user={user}
         logout={logout}
         currentUserFromDb={currentUserFromDb}
+        currentPage={currentPage}
       />
       {!user &&
         setTimeout(() => {

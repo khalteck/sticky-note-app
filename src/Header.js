@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import userImg from "./images/icons8-user-48.png";
 
-const Header = ({ user, logout, currentUserFromDb }) => {
+const Header = ({ user, logout, currentUserFromDb, currentPage }) => {
   const [openMenu, setOpenMenu] = useState(false);
   function handleClick() {
     setOpenMenu((prevState) => !prevState);
@@ -15,11 +15,6 @@ const Header = ({ user, logout, currentUserFromDb }) => {
   const hideDropdown = () => {
     setOpenMenu(false);
   };
-
-  // const [log, setLog] = useState(false);
-  // function handleLog() {
-  //   setLog((prev) => !prev);
-  // }
 
   return (
     <header>
@@ -37,19 +32,25 @@ const Header = ({ user, logout, currentUserFromDb }) => {
           <div className="flex items-center gap-6 lg:gap-16 mr-auto">
             <Link
               to="/"
-              className="cursor-pointer px-2 py-1 rounded-md hover:bg-rose-400 hover:translate-y-[6px] transition-all duration-300"
+              className={`cursor-pointer px-2 py-1 ${
+                currentPage === "/" && "bg-rose-400"
+              } rounded-md hover:bg-rose-400 hover:translate-y-[6px] transition-all duration-300`}
             >
               Home
             </Link>
             <Link
               to="/notes"
-              className="cursor-pointer px-2 py-1 rounded-md hover:bg-rose-400 hover:translate-y-[6px] transition-all duration-300"
+              className={`cursor-pointer px-2 py-1 ${
+                currentPage === "/notes" && "bg-rose-400"
+              } rounded-md hover:bg-rose-400 hover:translate-y-[6px] transition-all duration-300`}
             >
               Notes
             </Link>
             <Link
               to="/create"
-              className="cursor-pointer px-2 py-1 rounded-md hover:bg-rose-400 hover:translate-y-[6px] transition-all duration-300"
+              className={`cursor-pointer px-2 py-1 ${
+                currentPage === "/create" && "bg-rose-400"
+              } rounded-md hover:bg-rose-400 hover:translate-y-[6px] transition-all duration-300`}
             >
               Create
             </Link>

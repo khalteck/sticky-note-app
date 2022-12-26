@@ -17,6 +17,7 @@ const Notes = ({
   welcomeMessage,
   waitForUserFromDb,
   notesDataFromDb,
+  currentPage,
 }) => {
   // console.log(userNote);
   return (
@@ -25,6 +26,7 @@ const Notes = ({
         user={user}
         logout={logout}
         currentUserFromDb={currentUserFromDb}
+        currentPage={currentPage}
       />
       <div className="w-full px-4 sm:px-[100px] py-[100px]">
         {!waitForUserFromDb && !user && <Loader />}
@@ -43,7 +45,7 @@ const Notes = ({
           </div>
         )}
         <h1 className="text-[1.75rem] sm:text-[2.5rem] mb-8 sm:mb-12 font-bold tracking-wider">
-          {user && currentUserFromDb && `${currentUserFromDb?.displayName}'s`}{" "}
+          {!waitForUserFromDb && user && `${currentUserFromDb?.displayName}'s`}{" "}
           {user ? "n" : "N"}otes
         </h1>
         {user && (
