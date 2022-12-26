@@ -4,7 +4,6 @@ import Header from "./Header";
 import { Link } from "react-router-dom";
 import ScrollToTop from "./ScrollToTop";
 import Loader from "./components/Loader";
-import { useEffect, useState } from "react";
 
 const Main = ({
   user,
@@ -12,33 +11,10 @@ const Main = ({
   currentUserFromDb,
   waitForUserFromDb,
   currentPage,
+  globalCoords,
+  handleMouseMove,
+  coords,
 }) => {
-  const [coords, setCoords] = useState({ x: 0, y: 0 });
-
-  const handleMouseMove = (event) => {
-    setCoords({
-      x: event.clientX - event.target.offsetLeft,
-      y: event.clientY - event.target.offsetTop,
-    });
-  };
-
-  const [globalCoords, setGlobalCoords] = useState({ x: 0, y: 0 });
-
-  useEffect(() => {
-    // 👇️ get global mouse coordinates
-    const handleWindowMouseMove = (event) => {
-      setGlobalCoords({
-        x: event.screenX,
-        y: event.screenY,
-      });
-    };
-    window.addEventListener("mousemove", handleWindowMouseMove);
-
-    return () => {
-      window.removeEventListener("mousemove", handleWindowMouseMove);
-    };
-  }, []);
-
   // console.log(`${coords.x}px`, `${coords.y}px`);
 
   let style = {
@@ -59,11 +35,6 @@ const Main = ({
           onMouseMove={handleMouseMove}
           className="w-full min-h-screen bg-[#252525]/95 px-3 sm:px-[100px] sm:pt-[130px] pt-20 pb-8"
         >
-          <div
-            style={style}
-            className={`w-12 h-12 border-2 border-rose-500 fixed z-[999] rounded-full`}
-            id="cursor"
-          ></div>
           {!waitForUserFromDb && !user && <Loader />}
           {waitForUserFromDb && user && <Loader />}
           {user && (
@@ -117,6 +88,26 @@ const Main = ({
                 +
               </div>
             </Link>
+          </div>
+          <div
+            style={style}
+            className={`w-[150px] h-[75px] fixed z-[999] grid grid-cols-4 gap-1 hold`}
+            id="cursor"
+          >
+            <div className="rounded-full bg-rose-400 tile1"></div>
+            <div className="rounded-full bg-[#ffab91] tile2"></div>
+            <div className="rounded-full bg-[#e7ed9b] tile3"></div>
+            <div className="rounded-full bg-[#cf94da] tile4"></div>
+
+            <div className="rounded-full bg-emerald-400 tile5"></div>
+            <div className="rounded-full bg-yellow-300 tile6"></div>
+            <div className="rounded-full bg-slate-400 tile7"></div>
+            <div className="rounded-full bg-red-600 tile8"></div>
+
+            {/* <div className="rounded-full bg-[#cf94da]"></div>
+            <div className="rounded-full bg-blue-400"></div>
+            <div className="rounded-full bg-rose-500"></div>
+            <div className="rounded-full bg-[#e7ed9b]"></div> */}
           </div>
         </section>
         <ScrollToTop />

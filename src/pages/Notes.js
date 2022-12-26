@@ -18,7 +18,14 @@ const Notes = ({
   waitForUserFromDb,
   notesDataFromDb,
   currentPage,
+  globalCoords,
+  handleMouseMove,
+  coords,
 }) => {
+  let style = {
+    top: `${globalCoords.y - 100}px`,
+    left: `${globalCoords.x - 100}px`,
+  };
   // console.log(userNote);
   return (
     <>
@@ -28,7 +35,10 @@ const Notes = ({
         currentUserFromDb={currentUserFromDb}
         currentPage={currentPage}
       />
-      <div className="w-full px-4 sm:px-[100px] py-[100px]">
+      <div
+        onMouseMove={handleMouseMove}
+        className="w-full px-4 sm:px-[100px] py-[100px]"
+      >
         {!waitForUserFromDb && !user && <Loader />}
         {waitForUserFromDb && user && <Loader />}
         {welcomeMessage && (
@@ -128,6 +138,26 @@ const Notes = ({
             +
           </div>
         </Link>
+        <div
+          style={style}
+          className={`w-[150px] h-[75px] fixed z-[999] grid grid-cols-4 gap-1 hold`}
+          id="cursor"
+        >
+          <div className="rounded-full bg-rose-400 tile1"></div>
+          <div className="rounded-full bg-[#ffab91] tile2"></div>
+          <div className="rounded-full bg-[#e7ed9b] tile3"></div>
+          <div className="rounded-full bg-[#cf94da] tile4"></div>
+
+          <div className="rounded-full bg-emerald-400 tile5"></div>
+          <div className="rounded-full bg-yellow-300 tile6"></div>
+          <div className="rounded-full bg-slate-400 tile7"></div>
+          <div className="rounded-full bg-red-600 tile8"></div>
+
+          {/* <div className="rounded-full bg-[#cf94da]"></div>
+            <div className="rounded-full bg-blue-400"></div>
+            <div className="rounded-full bg-rose-500"></div>
+            <div className="rounded-full bg-[#e7ed9b]"></div> */}
+        </div>
         <ScrollToTop />
       </div>
     </>

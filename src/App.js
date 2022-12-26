@@ -32,6 +32,33 @@ function App() {
   const location = useLocation();
   let currentPage = location.pathname;
 
+  //to track cursour movement
+  const [coords, setCoords] = useState({ x: 0, y: 0 });
+
+  const handleMouseMove = (event) => {
+    setCoords({
+      x: event.clientX - event.target.offsetLeft,
+      y: event.clientY - event.target.offsetTop,
+    });
+  };
+
+  const [globalCoords, setGlobalCoords] = useState({ x: 0, y: 0 });
+
+  useEffect(() => {
+    // 👇️ get global mouse coordinates
+    const handleWindowMouseMove = (event) => {
+      setGlobalCoords({
+        x: event.screenX,
+        y: event.screenY,
+      });
+    };
+    window.addEventListener("mousemove", handleWindowMouseMove);
+
+    return () => {
+      window.removeEventListener("mousemove", handleWindowMouseMove);
+    };
+  }, []);
+
   //to save reg form input
   const [regForm, setRegForm] = useState({
     displayName: "",
@@ -422,6 +449,9 @@ function App() {
             currentUserFromDb={currentUserFromDb}
             waitForUserFromDb={waitForUserFromDb}
             currentPage={currentPage}
+            globalCoords={globalCoords}
+            handleMouseMove={handleMouseMove}
+            coords={coords}
           />
         }
       />
@@ -441,6 +471,9 @@ function App() {
             waitForUserFromDb={waitForUserFromDb}
             notesDataFromDb={notesDataFromDb}
             currentPage={currentPage}
+            globalCoords={globalCoords}
+            handleMouseMove={handleMouseMove}
+            coords={coords}
           />
         }
       />
