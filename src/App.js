@@ -281,6 +281,7 @@ function App() {
       );
       console.log("Note created");
       setUpdateNotes((prev) => !prev);
+      window.location.reload();
     } catch (err) {
       console.error("Error creating note: ", err);
     }
